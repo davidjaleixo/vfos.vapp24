@@ -1,0 +1,12 @@
+{
+    "jwt":{
+        "secret":"wertyuioplkjhgfds"
+    },
+    "storage":{
+        "url":"http://192.168.0.173:8083/vfos/rel/1.0.1",
+        "contentType":"application/json",
+        "accept": "application/json",
+        "auth":"Basic cG9zdGdyZXM6dmZvcw==",
+        "dataBaseName":"consulgal"
+    }
+}

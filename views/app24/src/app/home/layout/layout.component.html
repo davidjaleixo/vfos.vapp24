@@ -1,0 +1,74 @@
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Concrete Feedback</a>
+      <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+
+          <li class="nav-item dropdown" ng-if="user">
+            <!-- <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{user.username}}
+            <span ng-if="user.notifications.length > 0" class="btn btn-danger badge badge-danger">{{user.notifications.length}}</span>
+          </a-->
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <!-- <a class="dropdown-item" href="#" ng-click="logout()">Sign out</a> -->
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/projects">Projects</a>
+              <!-- <a class="dropdown-item" href="/notifications">Notifications <span ng-if="user.notifications.length >0" class="btn btn-danger badge badge-danger">{{user.notifications.length}}</span></a> -->
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/settings">Accounts Settings</a>
+            </div>
+          </li>
+          <li class="nav-item" ng-if="!user">
+            <!-- <a class="nav-link" href="#loginModal" data-toggle="modal">Sign In</a> -->
+          </li>
+          <li class="nav-item" ng-if="!user">
+            <a class="nav-link" routerLink="/login" href="#">Login</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+<main role="main">
+  <router-outlet></router-outlet>
+</main>
+<footer class="footer bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+          <ul class="list-inline mb-2">
+            <li class="list-inline-item">
+              <a href="#">About</a>
+            </li>
+            <li class="list-inline-item">&sdot;</li>
+            <li class="list-inline-item">
+              <a href="#">Contact</a>
+            </li>
+            <li class="list-inline-item">&sdot;</li>
+            <li class="list-inline-item">
+              <a href="#">Terms of Use</a>
+            </li>
+            <li class="list-inline-item">&sdot;</li>
+            <li class="list-inline-item">
+              <a href="#">Privacy Policy</a>
+            </li>
+          </ul>
+          <p class="text-muted small mb-4 mb-lg-0">&copy; Copyright 2019 - Produced by Knowledgebiz @ vf-OS EU Project</p>
+        </div>
+        <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
+          <ul class="list-inline mb-0">
+            <li class="list-inline-item mr-3">
+              <a href="http://www.vf-os.eu">
+                <img src="http://informationcatalyst.com/wp-content/uploads/2016/06/vf-os_logo.png" style="max-height:40px">
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
