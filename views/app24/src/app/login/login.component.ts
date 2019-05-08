@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { AuthenticationService } from '../_services';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,9 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
+    private authentication: AuthenticationService
   ) { }
 
   ngOnInit() {
@@ -39,6 +43,16 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.loading = true;
-    
+    this.authentication.login(this.f.username.value, this.f.password.value)
+    .pipe(first())
+    .subscribe(
+      data => {
+        this.router.navigate([this.returnUrl]);
+      },
+      error => {
+        this.loading = false;
+        //display error
+      }
+    )
   }
 }

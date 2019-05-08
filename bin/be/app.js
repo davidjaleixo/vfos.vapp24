@@ -9,9 +9,19 @@ const recursiveReadSync = require('recursive-readdir-sync')
 const contains = require("string-contains")
 const expressValidator = require('express-validator');
 var passport = require('passport');
+var jwt = require('express-jwt');
+const config = require('./config.json');
+var cors = require('cors');
 
 //express app
 var app = express();
+
+//cors configuration
+if(config.cors.allow){
+  console.log("CORS is allowed!");
+  app.use(cors());
+}
+
 
 //middleware configuration
 app.use(logger('dev'));
@@ -26,26 +36,36 @@ app.use(expressValidator());
 require('./passport');
 app.use(passport.initialize());
 
+//set the need of tokens for authentication unless the following paths
+app.use('/api', jwt({
+  secret: config.jwt.secret
+}).unless(
+  {
+    path: ['/api/login', '/api/register']
+  })
+)
+//set API routes
+app.use('/api',require('./router'));
+
 //set Angular static files
 app.use(express.static(path.join(path.normalize(__dirname), '../../views/app24/dist/app24')));
 
 //Serve Angular app - let the Angular decide every what to do with every route by using '*'
 app.get('*', function(req,res){
-	res.sendFile('index.html');
+	res.sendFile('index.html', {root: path.join(path.normalize(__dirname), '../../views/app24/dist/app24')});
 })
 
-//set API routes
-app.use('/api',require('./router'));
 
 
-/**
- * avoid cors 
- */
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+
+// Catch unauthorised errors
+app.use(function (err, req, res, next) {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401);
+    res.json({"message" : err.name + ": " + err.message});
+  }
 });
+
 
 // catch 404 and forward to error handler
 // app.use(function (req, res, next) {

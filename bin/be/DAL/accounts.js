@@ -32,17 +32,19 @@ var _genJwt = function (user) {
 
 module.exports = {
     generateJwt: function (user) {
+        console.log("Generating token");
         return _genJwt(user);
     },
     validPassword: function (user, password) {
+        console.log("Validating password...");
         return user.userhash === crypto.pbkdf2Sync(password, user.usersalt, 1000, 16, 'sha512').toString('hex')
     },
     create: function (user, password, cb) {
-        storage('GET', "/tables/accounts/rows?filter=userName='" + user + "'", {} , function (err, response, body) {
-            if (error) {
+        storage('GET', "/tables/accounts/rows?filter=username='" + user + "'", {} , function (err, response, body) {
+            if (err) {
                 cb(true, "Relational Storage Component not responding");
             } else {
-                if (res.statusCode == 200) {
+                if (response.statusCode == 200) {
                     json = JSON.parse(response.body);
                     result = json.list_of_rows
                     if (result.length > 0) {
@@ -51,19 +53,17 @@ module.exports = {
                         //Auth
                         //Possible idRoles 
                         //1 - Contractor
-                        //2 - Admin
+                        //2 - Admin (default)
                         //3 - Provider
-                        userSalt = genSalt(password);
-                        userHash = genHash(userSalt, password);
+                        let thisSalt = _genSalt(password);
                         let newuser = [{
                             userName: user,
-                            userHash: userHash,
-                            userSalt: userSalt,
+                            userHash: _genHash(thisSalt, password),
+                            userSalt: thisSalt,
                             idRoles: 2
                         }]
 
                         storage('POST', '/tables/accounts/rows', newuser, function (error, response, body) {
-                            console.log("Received response: " + JSON.stringify(response));
                             if (!error) {
                                 if (response.statusCode == 201) {
                                     //Generate jwt
@@ -86,7 +86,6 @@ module.exports = {
     getbyUserName : function (username, cb){
 		
         storage('GET', "/tables/accounts/rows?filter=userName="+"'"+username+"'", {}, function (error, response,body) {
-			console.log("Received response: " + JSON.stringify(response));
 			if (!error) {	
 				if(response.statusCode == 200){
 					json = JSON.parse(response.body);
@@ -99,5 +98,19 @@ module.exports = {
 				cb(true,"Relational Storage Component not responding");
 			}
 		})
-	}
+    },
+    getFiltered : function(id, cb){
+        storage('GET', "/tables/accounts/rows?query_columns_specification=idaccounts, username, idroles&filter=idaccounts!="+"'"+id+"'", {}, function (error, response,body) {
+			if (!error) {	
+				if(response.statusCode == 200){
+                    console.log("AQUI");
+                    cb(false,JSON.parse(response.body).list_of_rows);
+				}else{
+					cb(false,JSON.parse(response.body).message);
+				}
+			}else{
+				cb(true,"Relational Storage Component not responding");
+			}
+		})
+    }
 }

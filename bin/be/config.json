@@ -3,10 +3,20 @@
         "secret":"wertyuioplkjhgfds"
     },
     "storage":{
-        "url":"http://192.168.0.173:8083/vfos/rel/1.0.1",
+        //"url":"http://localhost:8083/vfos/rel/1.0.3",
+        "url":"vfrelstorage/vfos/rel/1.0.4",
         "contentType":"application/json",
         "accept": "application/json",
         "auth":"Basic cG9zdGdyZXM6dmZvcw==",
         "dataBaseName":"consulgal"
+    },
+    "cors":{
+        "allow": true
+    },
+    "files":{
+        "db": {
+            "tables": "/INIT/tables",
+            "views": "/INIT/views"
+        }
     }
 }

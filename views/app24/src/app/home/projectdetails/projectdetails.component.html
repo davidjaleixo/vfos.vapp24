@@ -1,0 +1,70 @@
+<section>
+  <div class="container" style="padding-top: 25px;">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/home/landing">Home</a></li>
+        <li class="breadcrumb-item"><a routerLink="/home/projects">Projects</a></li>
+        <li class="breadcrumb-item active">{{project.name}}</li>
+      </ol>
+    </nav>
+
+    <div class="rows">
+      <!--Slump card-->
+      <div class="card border-vfos mb-5 " style="width: 20rem;">
+        <img class="card-img-top" src="/assets/img/slumptest.jpg" alt="Slump test image">
+        <div class="card-body">
+          <h5 class="card-title">Slump test</h5>
+          <p class="card-text">The concrete slump test measures the consistency of fresh concrete content.</p>
+          <!--a href="#" class="btn btn-primary">New</a-->
+          <!-- <button *ngIf="user.role==1||user.role==2" data-toggle="modal" data-target="#slumpTestModal"
+            class="btn btn-primary center-block">New</button> -->
+            <a *ngIf="user.role==1||user.role==2" href="#" data-toggle="modal" data-target="#slumpTestModal" class="card-link">New</a> 
+          <a *ngIf="user.role==2" class="card-link"
+            routerLink="history">History</a>
+        </div>
+      </div>
+    </div>
+    <!--End Slump card-->
+{{equipmentsList | json}}
+    
+  </div>
+</section>
+<!--MODAL-->
+    <div class="modal fade center" id="slumpTestModal" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>New Slump test</h2>
+          </div>
+          <div class="modal-body">
+            {{equipmentsList | json}}
+            <!-- <div class="input-group mb-3" ng-if="showEquipment">
+              <div class="input-group-prepend">
+                <span class="input-group-text" ng-model="newST.value" id="measurement">Measurement</span>
+              </div>
+              <input type="number" min="0" class="form-control" ng-model="newST.value" placeholder="0"
+                aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3" ng-if="showEquipment">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Equipment used</label>
+              </div>
+              <select class="custom-select" ng-change="checkExistEquip()" ng-model="newST.equipment"
+                id="inputGroupSelect01" ng-init="newST.equipment='Choose...'">
+                <option selected>Choose...</option>
+                <option ng-repeat="equip in equipments" value="{{equip.idequipments}}">{{equip.name}}</option>
+              </select>
+            </div>
+            <div ng-if="showEquipment" ng-if="showSelectEquipment">
+              <p class="text-danger">There is no Select Equipment </p>
+            </div> -->
+          </div>
+          <div class="modal-footer">
+            <!-- <button ng-if="!showSelectEquipment" ng-click="createST()" data-dismiss="modal"
+              class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--End MODAL-->

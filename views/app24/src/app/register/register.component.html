@@ -1,3 +1,19 @@
-<p>
-  register works!
-</p>
+<div class="text-center">
+    <form class="form-signin" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <img class="mb-4" src="/assets/img/vfos-logo.png" alt="vf-os" height="50px">
+      <h1 class="h2 mb-3 font-weight-normal">Concrete Feedback</h1>
+      <p>Registration</p>
+      <label for="inputEmail" class="sr-only">Username</label>
+      <input type="email" id="inputEmail" class="form-control" placeholder="Username" required="" autofocus=""
+        formControlName="username">
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required=""
+        formControlName="password">
+      
+      <button class="btn btn-lg btn-vfos btn-block">Register</button>
+      <img class="mb-4"
+        src="https://static.wixstatic.com/media/851c99_906b40e5572d46c7accac027bb79a057~mv2.png/v1/fill/w_148,h_148,al_c,usm_0.66_1.00_0.01/851c99_906b40e5572d46c7accac027bb79a057~mv2.png"
+        alt="" width="72" height="72">
+  
+    </form>
+  </div>

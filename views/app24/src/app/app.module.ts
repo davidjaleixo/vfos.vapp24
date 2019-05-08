@@ -4,6 +4,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule }    from '@angular/forms';
 
 import { RouterModule } from '@angular/router';
+import { AuthenticationService } from './_services';
+
+//alerts
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
 
@@ -13,6 +18,9 @@ import { APP_ROUTES } from "./app.routes";
 import { HomeModule } from './home/home.module';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+
+//import interceptors
+import { HttpRequestInterceptor, JwtInterceptor } from './_helpers';
 
 @NgModule({
   declarations: [
@@ -26,8 +34,14 @@ import { RegisterComponent } from './register/register.component';
     HomeModule,
     ReactiveFormsModule,
     HttpClientModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot() // ToastrModule added
   ],
-  providers: [],
+  providers: [
+    AuthenticationService,
+    { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

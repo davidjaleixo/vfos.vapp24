@@ -9,6 +9,7 @@ passport.use(new LocalStrategy({
     usernameField: 'username'
   },
   function(username, password, done) {
+    console.log("using passport...");
     dal.accounts.getbyUserName(username, function(e, user){
       if(e){
         return done(e);

@@ -9,7 +9,7 @@ export class AuthenticationService {
     constructor(private http: HttpClient) { }
 
     login(email: string, password: string) {
-        return this.http.post(environment.apiUrl + `/login`, { email: email, password: password })
+        return this.http.post(environment.apiUrl + `/login`, { username: email, password: password })
             .pipe(map(response => {
                 //console.log("this is the answer: " + JSON.stringify(response['token']));
                 let token = response['token'];
@@ -51,15 +51,28 @@ export class AuthenticationService {
       }
     getUserDetails(token?: string): any {
         if(!token) token = localStorage.getItem('token');
-
-        const decoded = jwt_decode(token);
-        return { id: decoded._id, name: decoded.name, email: decoded.email}
+        try {
+            const decoded = jwt_decode(token);
+            return { id: decoded.id, username: decoded.username, role: decoded.role}
+        } catch (error) {
+            return null;
+        }
+        
     }
 
     getAccId(token?: string):any{
         if(!token) token = localStorage.getItem('token');
         const decoded = jwt_decode(token);
         return decoded._id;
+    }
+
+    isLoggedIn():boolean{
+        let user = this.getUserDetails();
+        if(user){
+            return user.exp > Date.now() / 1000; //return true if the session is not expired
+        }else{
+            return false;
+        }
     }
 
     
