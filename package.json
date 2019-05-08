@@ -26,11 +26,12 @@
         "request": "^2.88.0",
         "string-contains": "^0.1.0",
         "sync-request": "^6.1.0",
-        "yeoman-gen-run": "^1.2.3"
+        "yeoman-gen-run": "^1.2.3",
+        "@angular/cli": "6.1.1"
     },
     "devDependencies": {},
     "scripts": {
-        "boot": "npm install && cd views/app24 && npm install -g @angular/cli && ng build --prod",
+        "boot": "npm install && cd views/app24 && ng build --prod",
         "start-be": "PORT=4201 node ./bin/be/index.js",
         "start": "concurrently --kill-others \"npm run start-be\""
     },
