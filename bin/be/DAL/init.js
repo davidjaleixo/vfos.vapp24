@@ -173,8 +173,9 @@ module.exports = {
             body: config.storage.dataBaseName
         }
         request(Requestoptions, function (error, response, body) {
-            console.log("status", response.statusCode)
+            
             if (!error) {
+                console.log("status", response.statusCode)
                 if (response.statusCode == 201) {
                     cb(true);
                 } else {
