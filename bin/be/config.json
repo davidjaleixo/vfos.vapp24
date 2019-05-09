@@ -3,7 +3,7 @@
         "secret":"wertyuioplkjhgfds"
     },
     "storage":{
-        "url":"vfrelstorage/vfos/rel/1.0.4",
+        "url":"http://127.0.0.1/vfrelstorage/vfos/rel/1.0.4",
         "contentType":"application/json",
         "accept": "application/json",
         "auth":"Basic cG9zdGdyZXM6dmZvcw==",
