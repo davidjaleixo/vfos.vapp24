@@ -3,7 +3,6 @@
         "secret":"wertyuioplkjhgfds"
     },
     "storage":{
-        //"url":"http://localhost:8083/vfos/rel/1.0.3",
         "url":"vfrelstorage/vfos/rel/1.0.4",
         "contentType":"application/json",
         "accept": "application/json",
