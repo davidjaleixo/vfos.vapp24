@@ -36,6 +36,8 @@ app.use(expressValidator());
 require('./passport');
 app.use(passport.initialize());
 
+
+
 //set the need of tokens for authentication unless the following paths
 app.use('/api', jwt({
   secret: config.jwt.secret
