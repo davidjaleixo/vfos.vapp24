@@ -50,6 +50,7 @@ var getExistingViews = function () {
 module.exports = {
     dbExists: function (cb) {
         storage('GET', '/tables', {}, function (err, response, body) {
+            console.log(response.statusCode);
             if (!err) {
                 if (response.statusCode == 404) {
                     cb(false);
@@ -187,7 +188,6 @@ module.exports = {
         })
     },
     createRoles: function (cb) {
-        logger.info("Creating Roles....");
         var roles = [{
             accounttype: "contractor",
             description: "Contractor"
