@@ -127,21 +127,29 @@ function init() {
           dal.init.viewsExistsAndCreates(function (viewsdone) {
             if (viewsdone) {
               console.log("Checking views - DONE");
-              console.log("Creating roles...");
-              dal.init.createRoles(function(rolesdone){
-                if(rolesdone){
-                  console.log("Creating roles - DONE")
-                }else{
-                  console.log("NOT IMPLEMENTED :(")
+              console.log("Checking roles...");
+              dal.init.checkRoles(function (rolesExist) {
+                if (rolesExist) {
+                  console.log("Checking roles - DONE");
+                } else {
+                  console.log("Creating roles...");
+                  dal.init.createRoles(function (rolesdone) {
+                    if (rolesdone) {
+                      console.log("Creating roles - DONE")
+                    } else {
+                      console.log("NOT IMPLEMENTED :(")
+                    }
+                  })
                 }
               })
+
             } else {
               console.log("NOT IMPLEMENTED :(")
               console.log("Creating roles...");
-              dal.init.createRoles(function(rolesdone){
-                if(rolesdone){
+              dal.init.createRoles(function (rolesdone) {
+                if (rolesdone) {
                   console.log("Creating roles - DONE")
-                }else{
+                } else {
                   console.log("NOT IMPLEMENTED :(")
                 }
               })

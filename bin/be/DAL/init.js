@@ -187,6 +187,24 @@ module.exports = {
             }
         })
     },
+    checkRoles: function(cb){
+        storage('GET', '/tables/roles/roes', {}, function(err, response, body){
+            if(!err){
+                if (response.statusCode == 201) {
+                    console.info("Roles created: ", body.list_of_rows.length);
+                    if(body.list_of_rows.length == 3){
+                        cb(true);
+                    }else{
+                        cb(false);
+                    }
+                } else {
+                    cb(false);
+                }
+            }else{
+                cb(false);
+            }
+        })
+    },
     createRoles: function (cb) {
         var roles = [{
             accounttype: "contractor",
@@ -199,8 +217,7 @@ module.exports = {
             description: "Provider"
         }]
         storage('POST', '/tables/roles/rows', roles, function (err, response, body) {
-            if (!error) {
-                console.log("status", response.statusCode)
+            if (!err) {
                 if (response.statusCode == 201) {
                     cb(true);
                 } else {
