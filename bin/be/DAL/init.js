@@ -188,11 +188,11 @@ module.exports = {
         })
     },
     checkRoles: function(cb){
-        storage('GET', '/tables/roles/roes', {}, function(err, response, body){
+        storage('GET', '/tables/roles/rows', {}, function(err, response, body){
             if(!err){
-                if (response.statusCode == 201) {
-                    console.info("Roles created: ", body.list_of_rows.length);
-                    if(body.list_of_rows.length == 3){
+                if (response.statusCode == 200) {
+                    console.info("Found ", JSON.parse(body).list_of_rows.length, " roles");
+                    if(JSON.parse(body).list_of_rows.length >= 3){
                         cb(true);
                     }else{
                         cb(false);

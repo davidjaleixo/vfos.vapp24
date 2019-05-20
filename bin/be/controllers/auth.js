@@ -6,7 +6,8 @@ module.exports = {
         if(req.body.username && req.body.password){
             dal.accounts.create(req.body.username, req.body.password, function (e, answer) {
                 if (!e) {
-                    res.status(201).json({ message: answer })
+                    //res.status(201).json({ message: answer })
+                    res.status(201).json({token: answer})
                 } else {
                     res.status(500).json({ message: answer })
                 }
