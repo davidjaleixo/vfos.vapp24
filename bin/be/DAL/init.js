@@ -173,7 +173,32 @@ module.exports = {
             body: config.storage.dataBaseName
         }
         request(Requestoptions, function (error, response, body) {
-            
+
+            if (!error) {
+                console.log("status", response.statusCode)
+                if (response.statusCode == 201) {
+                    cb(true);
+                } else {
+                    cb(false);
+                }
+            } else {
+                cb(false);
+            }
+        })
+    },
+    createRoles: function (cb) {
+        logger.info("Creating Roles....");
+        var roles = [{
+            accounttype: "contractor",
+            description: "Contractor"
+        }, {
+            accounttype: "admin",
+            description: "Administrator"
+        }, {
+            accounttype: "provider",
+            description: "Provider"
+        }]
+        storage('POST', '/tables/roles/rows', roles, function (err, response, body) {
             if (!error) {
                 console.log("status", response.statusCode)
                 if (response.statusCode == 201) {

@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
+
+
+
 /**
  * Module dependencies.
  */
@@ -22,7 +25,7 @@ var http = require('http');
  */
 
 var port = normalizePort(process.env.PORT || '4200');
-console.info('backend is running ', port)
+console.info('backend is running internally at ', port)
 app.set('port', port);
 
 /**
@@ -124,8 +127,24 @@ function init() {
           dal.init.viewsExistsAndCreates(function (viewsdone) {
             if (viewsdone) {
               console.log("Checking views - DONE");
+              console.log("Creating roles...");
+              dal.init.createRoles(function(rolesdone){
+                if(rolesdone){
+                  console.log("Creating roles - DONE")
+                }else{
+                  console.log("NOT IMPLEMENTED :(")
+                }
+              })
             } else {
               console.log("NOT IMPLEMENTED :(")
+              console.log("Creating roles...");
+              dal.init.createRoles(function(rolesdone){
+                if(rolesdone){
+                  console.log("Creating roles - DONE")
+                }else{
+                  console.log("NOT IMPLEMENTED :(")
+                }
+              })
             }
           })
         } else {
