@@ -19,16 +19,19 @@ module.exports = {
         })
     },
     getByProject: function(projectid, cb){
+        console.log("getByProject");
         storage('GET', '/tables/users_on_projects/rows?filter=idprojects=' + projectid, {}, function (error, response, body) {
             if (!error) {
-                if (response.statusCode == 200) {
-                    json = JSON.parse(response.body);
-                    cb(false, json.list_of_rows);
-                } else {
-                    json = JSON.parse(response.body);
-                    cb(false, json.message);
-                }
+                cb(false, JSON.parse(body).list_of_rows);
+                // if (response.statusCode == 200) {
+                //     json = JSON.parse(response.body);
+                //     cb(false, json.list_of_rows);
+                // } else {
+                //     json = JSON.parse(response.body);
+                //     cb(false, json.message);
+                // }
             } else {
+                console.log(error);
                 cb(true, "Relational Storage Component not responding");
             }
         })

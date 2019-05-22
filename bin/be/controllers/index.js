@@ -3,5 +3,7 @@ module.exports = {
     projects: require('./projects'),
     equipments: require('./equipments'),
     users: require('./users'),
-    accounts: require('./accounts')
+    accounts: require('./accounts'),
+    slumptests: require('./slumptests'),
+    notification: require('./notification')
 }

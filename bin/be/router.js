@@ -28,8 +28,15 @@ router.route('/users').get(ctl.users.get);
 router.route('/users').post(ctl.users.create);
 router.route('/users').delete(ctl.users.delete);
 
-
 //accounts
 router.route('/accounts').get(ctl.accounts.get);
+
+//slumps
+router.route('/slumptest').post(ctl.slumptests.create, ctl.notification.validate);
+router.route('/slumptest').get(ctl.slumptests.get);
+
+//notifications
+router.route('/notifications').get(ctl.notification.get);
+
 
 module.exports = router;

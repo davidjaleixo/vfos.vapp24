@@ -1,0 +1,63 @@
+<section>
+  <div class="container" style="padding-top: 25px;">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/home/landing">Home</a></li>
+        <li class="breadcrumb-item"><a routerLink="/home/projects">Projects</a></li>
+        <li class="breadcrumb-item active">{{project.name}}</li>
+      </ol>
+    </nav>
+
+    <div class="rows mb-3">
+      <div>
+        <h1>Slump tests 
+          
+        </h1>
+        
+      </div>
+      <!--Slump table -->
+      <table class="table table-striped custab">
+        <thead>
+          <tr>
+            <th>Value</th>
+            <th>Equipment</th>
+            <th>Index</th>
+            <th>Created by</th>
+            <th>Created At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let slump of slumps">
+
+
+            <td>{{ slump.value }}</td>
+            <td>{{ slump.equipment}}</td>
+            <td>
+              <span *ngIf="slump.value > +project.threshold " class="badge badge-danger">+</span>
+              <span *ngIf="+project.threshold > slump.value " class="badge badge-info">-</span>
+              <span *ngIf="+project.threshold == slump.value " class="badge badge-success">=</span>
+            </td>
+            <td>{{ slump.username }}</td>
+            <td>{{ slump.date }}</td>
+
+          </tr>
+        </tbody>
+
+      </table>
+      <!--End Slump table -->
+
+      <!-- Chart -->
+      <div class="mb-5">
+        <div style="display: block">
+          <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+            [legend]="barChartLegend" [chartType]="barChartType">
+          </canvas>
+        </div>
+      </div>
+      <!-- Chart END -->
+    </div>
+
+
+    <!-- <button (click)="saveSlumptest()" data-dismiss="modal" class="btn btn-vfos">test</button> -->
+  </div>
+</section>

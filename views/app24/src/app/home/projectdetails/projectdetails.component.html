@@ -18,53 +18,43 @@
           <!--a href="#" class="btn btn-primary">New</a-->
           <!-- <button *ngIf="user.role==1||user.role==2" data-toggle="modal" data-target="#slumpTestModal"
             class="btn btn-primary center-block">New</button> -->
-            <a *ngIf="user.role==1||user.role==2" href="#" data-toggle="modal" data-target="#slumpTestModal" class="card-link">New</a> 
-          <a *ngIf="user.role==2" class="card-link"
-            routerLink="history">History</a>
+          <a *ngIf="user.role==1||user.role==2" href="#" data-toggle="modal" data-target="#slumpTestModal"
+            class="card-link">New</a>
+          <a *ngIf="user.role==2" class="card-link" routerLink="slumphistory" href="#">History</a>
+          
         </div>
       </div>
     </div>
     <!--End Slump card-->
-{{equipmentsList | json}}
+
     
   </div>
 </section>
 <!--MODAL-->
-    <div class="modal fade center" id="slumpTestModal" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h2>New Slump test</h2>
+<div class="modal fade center" id="slumpTestModal" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>New Slump test</h2>
+      </div>
+      <div class="modal-body">
+
+        <form [formGroup]="newslump">
+          <div class="alert alert-danger" *ngIf="equipmentsList.length == 0">
+            Please register a new equipment in project settings.
           </div>
-          <div class="modal-body">
-            {{equipmentsList | json}}
-            <!-- <div class="input-group mb-3" ng-if="showEquipment">
-              <div class="input-group-prepend">
-                <span class="input-group-text" ng-model="newST.value" id="measurement">Measurement</span>
-              </div>
-              <input type="number" min="0" class="form-control" ng-model="newST.value" placeholder="0"
-                aria-label="Username" aria-describedby="basic-addon1">
-            </div>
-            <div class="input-group mb-3" ng-if="showEquipment">
-              <div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect01">Equipment used</label>
-              </div>
-              <select class="custom-select" ng-change="checkExistEquip()" ng-model="newST.equipment"
-                id="inputGroupSelect01" ng-init="newST.equipment='Choose...'">
-                <option selected>Choose...</option>
-                <option ng-repeat="equip in equipments" value="{{equip.idequipments}}">{{equip.name}}</option>
-              </select>
-            </div>
-            <div ng-if="showEquipment" ng-if="showSelectEquipment">
-              <p class="text-danger">There is no Select Equipment </p>
-            </div> -->
-          </div>
-          <div class="modal-footer">
-            <!-- <button ng-if="!showSelectEquipment" ng-click="createST()" data-dismiss="modal"
-              class="btn btn-primary">Save</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-          </div>
-        </div>
+          <label for="equipselect" id="idAccount">Select equipment</label>
+          <select class="form-control" formControlName="eqid" id="equipselect">
+            <option [ngValue]="aveq" *ngFor="let aveq of equipmentsList">{{aveq.name}}</option>
+          </select>
+          <label for="slumpvalue">Slumpt Measurement</label>
+          <input type="number" min="0" class="form-control" formControlName="value">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button (click)="saveSlump()" data-dismiss="modal" class="btn btn-vfos">Save</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
-    <!--End MODAL-->
+  </div>
+</div>

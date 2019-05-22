@@ -1,0 +1,5 @@
+{
+    "view_definition_query":"select slt.idslumptests, slt.value, slt.date, slt.idprojects, pr.name as project, slt.idequipments, equ.name as equipment, slt.idaccounts, acc.username from consulgal.slumptests as slt left join consulgal.projects as pr on pr.idprojects = slt.idprojects left join consulgal.equipments as equ on equ.idequipments = slt.idequipments left join consulgal.accounts as acc on acc.idaccounts = slt.idaccounts ",
+    "view_name":"slump_history"
+ }
+ 

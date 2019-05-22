@@ -1,0 +1,4 @@
+{
+    "view_definition_query":"select noti.read, noti.date, noti.idnotification, noti.idaccounts, noti.idslumptests, slt.value, slt.idprojects, prj.name from consulgal.notifications as noti left join consulgal.slumptests as slt on slt.idslumptests = noti.idslumptests left join consulgal.projects as prj on prj.idprojects = slt.idprojects ",
+    "view_name":"list_notifications"
+}

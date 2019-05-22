@@ -1,0 +1,54 @@
+var dal = require('../DAL');
+
+
+
+module.exports = {
+
+    create: function (req, res, next) {
+
+        //body: {value, equipment, project, threshold}
+
+        if (req.body.value && req.body.equipment && req.body.project && req.body.threshold) {
+
+            dal.slumps.create(req.body.value, req.body.equipment, req.body.project, req.user.id, function (err, answer) {
+                if (!err) {
+                    //TODO call next()
+                    res.status(201).json(answer);
+                    next();
+                    
+                } else {
+                    res.status(500).end();
+                }
+            })
+        } else {
+            res.status(422).json({ message: "Missing required fields" })
+        }
+
+    },
+    get: function(req,res){
+        if(req.query.project){
+            dal.slumps.getByProject(req.query.project, function(err,answer){
+                if(!err){
+                    res.status(201).json(answer);
+                }else{
+                    res.status(500).end();
+                }
+            })
+        }else{
+            res.status(422).json({ message: "Missing required field" })
+        }
+    },
+    delete: function (req, res) {
+        if (req.query.id) {
+            dal.projects.delete(req.query.id, function (err, answer) {
+                if (!err) {
+                    res.status(200).send(answer);
+                } else {
+                    res.status(500).end();
+                }
+            })
+        } else {
+            res.status(422).json({ message: "Missing required field" })
+        }
+    }
+}

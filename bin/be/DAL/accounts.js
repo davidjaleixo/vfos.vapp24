@@ -39,7 +39,7 @@ module.exports = {
         console.log("Validating password...");
         return user.userhash === crypto.pbkdf2Sync(password, user.usersalt, 1000, 16, 'sha512').toString('hex')
     },
-    create: function (user, password, cb) {
+    create: function (user, password, type, cb) {
         storage('GET', "/tables/accounts/rows?filter=username='" + user + "'", {} , function (err, response, body) {
             if (err) {
                 cb(true, "Relational Storage Component not responding");
@@ -60,14 +60,14 @@ module.exports = {
                             userName: user,
                             userHash: _genHash(thisSalt, password),
                             userSalt: thisSalt,
-                            idRoles: 2
+                            idRoles: type
                         }]
 
                         storage('POST', '/tables/accounts/rows', newuser, function (error, response, body) {
                             if (!error) {
                                 if (response.statusCode == 201) {
                                     //Generate jwt
-                                    cb(false, _genJwt({ username: user, idroles: 2 }))
+                                    cb(false, _genJwt({ username: user, idroles: type }))
                                 } else {
                                     json = JSON.parse(response.body);
                                     cb(false, json.message);

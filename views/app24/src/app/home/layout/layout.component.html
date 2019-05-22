@@ -12,14 +12,14 @@
           <li class="nav-item dropdown" *ngIf="user">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{user.username}}
-            <!-- <span *ngIf="user.notifications.length > 0" class="btn btn-danger badge badge-danger">{{user.notifications.length}}</span> -->
+            <span *ngIf="unread.length > 0" class="btn btn-danger badge badge-danger">{{unread.length}}</span>
             </a>
             
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#" (click)="logout()">Sign out</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" routerLink="projects">Projects</a>
-              <!-- <a class="dropdown-item" href="/notifications">Notifications <span ng-if="user.notifications.length >0" class="btn btn-danger badge badge-danger">{{user.notifications.length}}</span></a> -->
+              <a class="dropdown-item" routerLink="notifications">Notifications <span *ngIf="unread.length >0" class="btn btn-danger badge badge-info">{{unread.length}}</span></a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" routerLink="settings">Accounts Settings</a>
             </div>

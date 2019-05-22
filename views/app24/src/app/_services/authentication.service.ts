@@ -28,8 +28,8 @@ export class AuthenticationService {
         localStorage.removeItem('token');
     }
 
-    register(name: string, password: string){
-        return this.http.post(environment.apiUrl + '/register', { username: name, password: password})
+    register(name: string, password: string, type: number){
+        return this.http.post(environment.apiUrl + '/register', { username: name, password: password, type: type})
         .pipe(map(response => {
             let token = response['token'];
             if(token){

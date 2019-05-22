@@ -75,13 +75,14 @@ module.exports = {
                     } else {
                         if (j == lenj - 1) {
                             let answer = syncstorage('POST', '/views', require('.' + config.files.db.views + '/0' + (i + 1) + '_' + views[i] + '.json'));
+                            
                             if (answer.statusCode == 201) {
                                 console.log(views[i], "Created");
                             } else {
                                 if (answer.statusCode == 409) {
                                     console.log(views[i], "Already exists - Check the name of the JSON file");
                                 } else {
-                                    console.log(views[i], "Not created");
+                                    console.log(views[i], "Not created. ", JSON.parse(answer.body).message);
                                 }
                             }
                         }

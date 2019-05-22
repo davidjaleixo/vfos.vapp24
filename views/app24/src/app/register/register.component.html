@@ -15,6 +15,12 @@
       <label for="inputPasswordrepeat" class="sr-only">Repeat Password</label>
     <input type="password" id="inputPasswordrepeat" class="form-control" placeholder="Repeat Password" required=""
       formControlName="passwordrepeat">
+      
+      <label for="typeacc" class="sr-only">Account type:</label>
+
+      <select class="form-control" formControlName="type" placeholder="Account type" id="typeacc">
+        <option [ngValue]="avtypes.value" *ngFor="let avtypes of acctypes">{{avtypes.name}}</option>
+      </select>
 
     <button class="btn btn-lg btn-vfos btn-block">Register</button>
     

@@ -13,6 +13,7 @@ import { first } from 'rxjs/operators';
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
+  acctypes: any;
 
   constructor(
     private fb: FormBuilder,
@@ -26,8 +27,10 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.fb.group({
       username: [''],
       password: [''],
-      passwordrepeat: ['']
+      passwordrepeat: [''],
+      type: ['']
     });
+    this.acctypes = [{name: 'Admin', value: 2},{name: 'Contractor', value: 1},{name: 'Provider', value: 3}];
   }
   //getter for the form
   get f() { return this.registerForm.controls }
@@ -37,7 +40,7 @@ export class RegisterComponent implements OnInit {
 
     //check eq password
     if (this.f.password.value == this.f.passwordrepeat.value) {
-      this.authentication.register(this.f.username.value, this.f.password.value)
+      this.authentication.register(this.f.username.value, this.f.password.value, this.f.type.value)
         .pipe(first())
         .subscribe(data => {
           console.log("register: ", data);

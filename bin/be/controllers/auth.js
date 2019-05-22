@@ -3,8 +3,8 @@ var passport = require('passport');
 
 module.exports = {
     register: function (req, res) {
-        if(req.body.username && req.body.password){
-            dal.accounts.create(req.body.username, req.body.password, function (e, answer) {
+        if(req.body.username && req.body.password, req.body.type){
+            dal.accounts.create(req.body.username, req.body.password, req.body.type, function (e, answer) {
                 if (!e) {
                     //res.status(201).json({ message: answer })
                     res.status(201).json({token: answer})
