@@ -6,12 +6,13 @@ module.exports = {
             idprojects: projectid,
             idaccounts: accid
         }];
+        console.log("creating allocation data ", message);
         storage('POST', '/tables/users/rows', message, function (err, response, body) {
             if (!err) {
                 if (response.statusCode == 201) {
                     cb(false, {message: "Allocation created"});
                 } else {
-                    cb(false, {message: "Allocation error"});
+                    cb(true, {message: "Allocation error"});
                 }
             } else {
                 cb(true, "Relational Storage Component not responding");

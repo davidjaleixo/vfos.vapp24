@@ -2,14 +2,15 @@ var storage = require('./storageRequester');
 
 module.exports = {
 
-    create: function (slumpValue, suppliersId, projectId, accountsId, compositionsId, cb) {
+    create: function (slumpValue, suppliersId, projectId, accountsId, compositionsId, loadid, cb) {
         let data = [{
             value: slumpValue,
             date: new Date().toUTCString(),
             idSuppliers: suppliersId,
             idprojects: projectId,
             idAccounts: accountsId,
-            idCompositions: compositionsId
+            idCompositions: compositionsId,
+            loadid: loadid
         }];
         storage('POST', "/tables/slumptests/rows", data, function (error, response, body) {
             if (!error) {

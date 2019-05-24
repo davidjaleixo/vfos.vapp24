@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjectService, AuthenticationService, EquipmentService, UserService, AccountsService } from '../../_services';
+import { ProjectService, AuthenticationService, SupplierService, CompositionsService, UserService, AccountsService } from '../../_services';
 import { ActivatedRoute, Router } from "@angular/router";
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -13,23 +13,27 @@ export class ProjectsettingsComponent implements OnInit {
 
   project: any;
   unsetProject: any;
-  equipments: any;
-  eqName: String;
+  suppliers: any;
+  supplierName: String;
   users: any;
   availableusers: any;
   selectedUser: any;
   user: any;
   newUserForm: FormGroup;
 
+  compositions: any;
+  newComp: any;
+
   constructor(
     private projectservice: ProjectService,
     private router: ActivatedRoute,
     private rou: Router,
     private authentication: AuthenticationService,
-    private equipmentservice: EquipmentService,
+    private supplierservice: SupplierService,
     private alert: ToastrService,
     private userservice: UserService,
     private accountservice: AccountsService,
+    private compositionsservice: CompositionsService,
     private fb: FormBuilder) { }
 
   getUsersOnProject() {
@@ -43,9 +47,20 @@ export class ProjectsettingsComponent implements OnInit {
     )
   }
 
-  ngOnInit() {
-    this.eqName = '';
+  getCompositions() {
+    this.compositionsservice.getCompByProject(this.router.snapshot.paramMap.get("idproject")).subscribe(
+      data => {
+        this.compositions = data;
+      }, err => {
+        console.log(err);
+      }
+    )
+  }
 
+  ngOnInit() {
+    this.supplierName = '';
+
+    this.newComp = { name: '', tholdmin: 0, tholdmax: 0 };
 
 
     this.projectservice.getProject(this.router.snapshot.paramMap.get("idproject")).subscribe(
@@ -57,9 +72,9 @@ export class ProjectsettingsComponent implements OnInit {
       })
 
 
-    this.equipmentservice.getAll(this.router.snapshot.paramMap.get("idproject")).subscribe(
+    this.supplierservice.getAll(this.router.snapshot.paramMap.get("idproject")).subscribe(
       data => {
-        this.equipments = data;
+        this.suppliers = data;
       }, err => {
         console.log("err", err);
       }
@@ -70,20 +85,21 @@ export class ProjectsettingsComponent implements OnInit {
     let user = this.authentication.getUserDetails();
     if (user != null) {
       this.user = user;
-      console.log("getting available user unless this one ", this.user.id);
+
       this.accountservice.getAvailableUsers(this.user.id).subscribe(
         data => {
           this.availableusers = data;
           this.newUserForm = this.fb.group({
             user: [this.availableusers[0]],
           });
-          console.log("available users:", data);
         }, err => {
-          console.log("available users", err);
+          console.log("available users err: ", err);
         }
       )
 
     }
+
+    this.getCompositions();
   }
 
   updateName(projectId) {
@@ -156,23 +172,23 @@ export class ProjectsettingsComponent implements OnInit {
       })
   }
 
-  createEquipment() {
-    console.log("this is the name ", this.eqName);
-    this.equipmentservice.create(this.eqName, this.project.idprojects).subscribe(data => {
-      this.alert.success("Equipment created")
+  createSupplier() {
+    console.log("this is the name ", this.supplierName);
+    this.supplierservice.create(this.supplierName, this.project.idprojects).subscribe(data => {
+      this.alert.success("Supplier created")
       this.ngOnInit();
     }, err => {
-      this.alert.error("Equipment not created")
+      this.alert.error("Supplier not created")
 
     })
   }
 
   deleteEq(id) {
-    this.equipmentservice.delete(id).subscribe(data => {
-      this.alert.success("Equipment deleted")
+    this.supplierservice.delete(id).subscribe(data => {
+      this.alert.success("Supplier deleted")
       this.ngOnInit();
     }, err => {
-      this.alert.error("Equipment not deleted")
+      this.alert.error("Supplier not deleted")
     })
   }
   addUser() {
@@ -188,14 +204,37 @@ export class ProjectsettingsComponent implements OnInit {
     this.newUserForm.reset();
 
   }
-  deleteUser(AllocationId){
+  deleteUser(AllocationId) {
     this.userservice.unAllocate(AllocationId).subscribe(data => {
       this.alert.success("User has been deleted from this project")
       this.getUsersOnProject();
-    },err => {
+    }, err => {
       this.alert.error("User was not deleted from the project");
       console.log(err);
     })
+  }
+
+  createComposition() {
+    this.compositionsservice.create(this.newComp.name, this.newComp.tholdmin, this.newComp.tholdmax, this.router.snapshot.paramMap.get("idproject")).subscribe(
+      data => {
+        this.alert.success("Composition created");
+        this.getCompositions();
+        this.newComp = { name: '', tholdmin: 0, tholdmax: 0};
+      }, err => {
+        this.alert.error("Composition was not created")
+      }
+    )
+  }
+
+  deleteComposition(id){
+    this.compositionsservice.delete(id).subscribe(
+      data => {
+        this.alert.success("Composition has been deleted");
+        this.getCompositions();
+      }, err => {
+        this.alert.error("Composition not deleted")
+      }
+    )
   }
 
 }

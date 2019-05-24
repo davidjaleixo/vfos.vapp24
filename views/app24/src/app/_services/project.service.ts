@@ -6,8 +6,8 @@ import { environment } from './../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class ProjectService {
     constructor(private http: HttpClient) { }
-    create(projectName: String, projectDescription: String, projectThreshold: Number) {
-        return this.http.post(environment.apiUrl + '/projects', { name: projectName, description: projectDescription, threshold: projectThreshold })
+    create(projectName: String, projectDescription: String) {
+        return this.http.post(environment.apiUrl + '/projects', { name: projectName, description: projectDescription })
     }
     getAll() {
         return this.http.get(environment.apiUrl + '/projects')

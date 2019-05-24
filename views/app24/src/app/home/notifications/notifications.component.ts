@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ProjectService, AuthenticationService, EquipmentService, SlumpService, NotificationService } from '../../_services';
+import { ProjectService, AuthenticationService, SupplierService, SlumpService, NotificationService } from '../../_services';
 import { ActivatedRoute } from "@angular/router";
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';

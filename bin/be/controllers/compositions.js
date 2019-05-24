@@ -2,8 +2,9 @@ var dal = require('../DAL');
 
 module.exports = {
     create: function (req, res) {
+        console.log(req.body);
         if(req.body.name && req.body.projectid && req.body.tholdmax && req.body.tholdmin){
-            dal.compositions.create(req.body.name, req.body.projectid,req.body.tholdmax,req.body.tholdmin,  function(err,response){
+            dal.compositions.create(req.body.name,req.body.tholdmax,req.body.tholdmin,req.body.projectid,  function(err,response){
                 if(!err){
                     res.status(201).end();
                 }else{
@@ -26,7 +27,7 @@ module.exports = {
             })
         } else {
             //get all compositions not matter the project 
-            //not implemented - TODO or NOTTODO there is the question :)
+            //not implemented - TODO or NOTTODO  is the question :)
             res.status(501).end();
         }
     },

@@ -46,7 +46,7 @@ module.exports = {
             }
         })
     },
-    create: function(name, description, thold, cb){
+    create: function(name, description, cb){
         storage('POST', "/tables/projects/rows", [{name: name, description: description, status: true}], function(error, response, body){
             if(!error){
                 cb(false, {message: "Project is created"})

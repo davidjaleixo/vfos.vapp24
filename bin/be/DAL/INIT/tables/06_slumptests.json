@@ -6,6 +6,13 @@
          "type": "integer"
       },
       {
+         "allow_null":false,
+         "default":"load_identification",
+         "name":"loadid",
+         "size":100,
+         "type":"varchar"
+      },
+      {
          "default": "now()",
          "name": "date",
          "type": "TIMESTAMP"

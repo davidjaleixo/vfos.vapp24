@@ -35,15 +35,14 @@ export class ProjectsComponent implements OnInit {
 
     this.newProjectForm = this.fb.group({
       name: [''],
-      description: [''],
-      threshold: ['']
+      description: ['']
     });
   }
   //form getter
   get f() { return this.newProjectForm.controls}
 
   onSubmit(){
-    this.ProjectService.create(this.f.name.value, this.f.description.value, this.f.threshold.value).subscribe(data => {
+    this.ProjectService.create(this.f.name.value, this.f.description.value).subscribe(data => {
       //add the new project in the list
       this.projectsList.push(data);
       this.newProjectForm.reset();

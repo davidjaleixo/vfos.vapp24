@@ -52,7 +52,7 @@
                   (click)="updateStatus(project.idprojects)">Start</button>
               </th>
             </tr>
-            <tr>
+            <!-- <tr>
               <th>Threshold</th>
               <th>
                 <input type="number" min="0" class="form-control" [(ngModel)]="project.threshold" placeholder="100"
@@ -61,7 +61,7 @@
               <th><button class="btn btn-sm btn-secondary" (click)="updateThold(project.idprojects)">Update</button>
               </th>
 
-            </tr>
+            </tr> -->
           </tbody>
         </table>
 
@@ -71,7 +71,7 @@
     <!-- Settings section END -->
     <div class="card mb-3">
       <div class="card-header">
-        Equipments
+        Concrete Suppliers
         <button class="float-right btn btn-sm btn-vfos" data-target="#addeq" data-toggle="modal">
           <i class="fa fa-plus"></i> Add</button>
       </div>
@@ -79,10 +79,10 @@
 
         <table class="table">
           <tbody>
-            <tr *ngFor="let eq of equipments">
-              <td>{{eq.name}}</td>
+            <tr *ngFor="let supp of suppliers">
+              <td>{{supp.name}}</td>
               <td>
-                <button class="btn btn-danger btn-sm" (click)="deleteEq(eq.idequipments)">
+                <button class="btn btn-danger btn-sm" (click)="deleteEq(supp.idsuppliers)">
                   <i class="fa fa-trash"></i>
                 </button>
               </td>
@@ -92,7 +92,47 @@
         </table>
       </div>
     </div>
+    <!-- COMPOSITIONS START -->
+    <div class="card mb-5">
+      <div class="card-header">
+        Concrete compositions
+        <button class="float-right btn btn-sm btn-vfos" data-target="#addcomposition" data-toggle="modal">
+          <i class="fa fa-plus"></i> Add</button>
+      </div>
+      <div class="card-body">
 
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Min Threshold</th>
+              <th scope="col">Max Threshold</th>
+              <th scope="col">Options</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let comps of compositions">
+              <td>{{comps.name}}</td>
+              <td>{{comps.tholdmin}}</td>
+              <td>{{comps.tholdmax}}</td>
+              <td>
+                <button class="btn btn-danger btn-sm" (click)="deleteComposition(comps.idcompositions)">
+                  <i class="fa fa-trash"></i>
+                </button>
+                <!-- <button class="btn btn-warning btn-sm" (click)="idCheck(user.idaccounts, user.username)"
+                  data-target="#editRoles" data-toggle="modal">
+                  <i class="fa fa-pencil-square-o"></i>
+                </button> -->
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- COMPOSITIONS END -->
+
+    <!-- USERS START -->
     <div class="card mb-5">
       <div class="card-header">
         Users
@@ -132,15 +172,16 @@
         </table>
       </div>
     </div>
+    <!-- USERS END -->
   </div>
 </section>
 
-<!-- New Equipment Modal -->
+<!-- New Supplier Modal -->
 <div id="addeq" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h3>Add equipment</h3>
+        <h3>Add supplier</h3>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       </div>
       <div class="modal-body">
@@ -148,12 +189,12 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Name</span>
           </div>
-          <input type="text" class="form-control" [(ngModel)]="eqName" placeholder="Equipment name"
-            aria-label="Username">
+          <input type="text" class="form-control" [(ngModel)]="supplierName" placeholder="Supplier name"
+            aria-label="Supplier name">
         </div>
       </div>
       <div class="modal-footer">
-        <button (click)="createEquipment()" data-dismiss="modal" class="btn btn-vfos">Add</button>
+        <button (click)="createSupplier()" data-dismiss="modal" class="btn btn-vfos">Add</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -178,7 +219,7 @@
             </select>
 
 
-              
+
           </form>
         </div>
       </div>
@@ -189,3 +230,43 @@
     </div>
   </div>
 </div>
+
+<!-- New composition Modal -->
+<div id="addcomposition" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Add composition</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Name</span>
+          </div>
+          <input type="text" class="form-control" [(ngModel)]="newComp.name" placeholder="Composition name"
+            aria-label="Composition name">
+        </div>
+
+        <div class="input-group mb-3">
+          <div class="input-group-append"><span class="input-group-text">Min Threshold</span></div>
+          <input type="number" min="0" inputmode="numeric" pattern="[0-9]*" class="form-control"
+            [(ngModel)]="newComp.tholdmin">
+          <div class="input-group-append"><span class="input-group-text">mm</span></div>
+        </div>
+
+        <div class="input-group mb-3">
+          <div class="input-group-append"><span class="input-group-text">Max Threshold</span></div>
+          <input type="number" min="{{newComp.tholdmin}}" inputmode="numeric" pattern="[0-9]*" class="form-control"
+            [(ngModel)]="newComp.tholdmax">
+          <div class="input-group-append"><span class="input-group-text">mm</span></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button (click)="createComposition()" data-dismiss="modal" class="btn btn-vfos">Add</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--New composition End Modal-->

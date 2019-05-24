@@ -21,13 +21,13 @@
           <a *ngIf="user.role==1||user.role==2" href="#" data-toggle="modal" data-target="#slumpTestModal"
             class="card-link">New</a>
           <a *ngIf="user.role==2" class="card-link" routerLink="slumphistory" href="#">History</a>
-          
+
         </div>
       </div>
     </div>
     <!--End Slump card-->
 
-    
+
   </div>
 </section>
 <!--MODAL-->
@@ -40,15 +40,35 @@
       <div class="modal-body">
 
         <form [formGroup]="newslump">
-          <div class="alert alert-danger" *ngIf="equipmentsList.length == 0">
-            Please register a new equipment in project settings.
+          <div class="alert alert-danger" *ngIf="suppList.length == 0">
+            Please register a new supplier in project settings.
           </div>
-          <label for="equipselect" id="idAccount">Select equipment</label>
-          <select class="form-control" formControlName="eqid" id="equipselect">
-            <option [ngValue]="aveq" *ngFor="let aveq of equipmentsList">{{aveq.name}}</option>
+
+          <label for="supplier">Select supplier</label>
+          <select class="form-control  mb-3" formControlName="supplierid" id="supplier">
+            <option [ngValue]="avsuppliers" *ngFor="let avsuppliers of suppList">{{avsuppliers.name}}</option>
           </select>
-          <label for="slumpvalue">Slumpt Measurement</label>
-          <input type="number" min="0" class="form-control" formControlName="value">
+
+          <div class="alert alert-danger" *ngIf="compositions.length == 0">
+            Please register a new composition in project settings.
+          </div>
+
+          <label for="composition">Select concrete composition</label>
+          <select class="form-control mb-3" formControlName="compositionid" id="composition">
+            <option [ngValue]="avcompositions" *ngFor="let avcompositions of compositions">{{avcompositions.name}}</option>
+          </select>
+          
+
+          <label for="loadid">Insert load identification</label>
+          <div class="input-group  mb-3">
+            <input type="text" class="form-control" formControlName="loadid" placeholder="License plate or transport document">
+          </div>
+
+          <label for="slumpvalue">Register slump test value</label>
+          <div class="input-group  mb-3">
+            <input type="number" min="0" inputmode="numeric" pattern="[0-9]*" class="form-control" formControlName="value">
+            <div class="input-group-append"><span class="input-group-text">mm</span></div>
+          </div>
         </form>
       </div>
       <div class="modal-footer">
