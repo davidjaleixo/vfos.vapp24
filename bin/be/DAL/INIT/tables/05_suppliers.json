@@ -2,13 +2,13 @@
     "columns":[
        {
           "allow_null":false,
-          "default":"userdummy",
+          "default":"default_name",
           "name":"name",
           "size":100,
           "type":"varchar"
        },
        {
-          "name":"idEquipments",
+          "name":"idSuppliers",
           "type":"serial"
        },
        {
@@ -32,19 +32,19 @@
           },
           "primary_key":{
              "columns":[
-                "idEquipments"
+                "idSuppliers"
              ],
-             "name":"pk_idEquipments",
+             "name":"pk_idSuppliers",
              "on_delete":"CASCADE",
              "on_update":"CASCADE"
           },
           "unique":{
              "columns":[
-                "idEquipments"
+                "idSuppliers"
              ],
-             "name":"unique_idEquipments"
+             "name":"unique_idSuppliers"
           }
        }
     ],
-    "table_name":"equipments"
+    "table_name":"suppliers"
  }

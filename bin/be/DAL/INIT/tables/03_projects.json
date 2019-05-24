@@ -20,11 +20,6 @@
           "type":"boolean"
        },
        {
-          "allow_null":false,
-          "name":"threshold",
-          "type":"integer"
-       },
-       {
           "name":"idProjects",
           "type":"serial"
        }

@@ -1,9 +1,10 @@
 module.exports = {
     auth : require('./auth'),
     projects: require('./projects'),
-    equipments: require('./equipments'),
+    suppliers: require('./suppliers'),
     users: require('./users'),
     accounts: require('./accounts'),
     slumptests: require('./slumptests'),
-    notification: require('./notification')
+    notification: require('./notification'),
+    compositions: require('./compositions')
 }

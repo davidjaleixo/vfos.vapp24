@@ -34,9 +34,9 @@ module.exports = {
         //res.status(201).json({awesome: "working"})
     },
     create: function (req, res) {
-        //body: {name,description, threshold}
-        if (req.body.name && req.body.description && req.body.threshold) {
-            dal.projects.create(req.body.name, req.body.description, req.body.threshold, function (err, answer) {
+        //body: {name,description}
+        if (req.body.name && req.body.description) {
+            dal.projects.create(req.body.name, req.body.description, function (err, answer) {
                 if (!err) {
                     //get project by name
                     dal.projects.getByName(req.body.name, function (err2, answer2) {
@@ -83,8 +83,8 @@ module.exports = {
                     }
                 })
             } else {
-                if (req.body.threshold) {
-                    dal.projects.updateThold(req.query.id, req.body.threshold, function (err, answer) {
+                if (req.body.status || !req.body.status) {
+                    dal.projects.updateStatus(req.query.id, req.body.status, function (err, answer) {
                         if (!err) {
                             res.status(200).send(answer);
                         } else {
@@ -92,19 +92,9 @@ module.exports = {
                         }
                     })
                 } else {
-
-                    if (req.body.status || !req.body.status) {
-                        dal.projects.updateStatus(req.query.id, req.body.status, function (err, answer) {
-                            if (!err) {
-                                res.status(200).send(answer);
-                            } else {
-                                res.status(500).end();
-                            }
-                        })
-                    } else {
-                        res.status(422).json({ message: "Missing required field" })
-                    }
+                    res.status(422).json({ message: "Missing required field" })
                 }
+
             }
         }
     },

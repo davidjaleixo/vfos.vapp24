@@ -18,10 +18,10 @@ router.route('/projects').post(ctl.projects.create);
 router.route('/projects').patch(ctl.projects.update);
 router.route('/projects').delete(ctl.projects.delete);
 
-//equipments
-router.route('/equipments').get(ctl.equipments.get);
-router.route('/equipments').post(ctl.equipments.create);
-router.route('/equipments').delete(ctl.equipments.delete);
+//suppliers
+router.route('/suppliers').get(ctl.suppliers.get);
+router.route('/suppliers').post(ctl.suppliers.create);
+router.route('/suppliers').delete(ctl.suppliers.delete);
 
 //users
 router.route('/users').get(ctl.users.get);
@@ -37,6 +37,11 @@ router.route('/slumptest').get(ctl.slumptests.get);
 
 //notifications
 router.route('/notifications').get(ctl.notification.get);
+
+//compositions
+router.route('/compositions').post(ctl.compositions.create);
+router.route('/compositions').get(ctl.compositions.get);
+router.route('/compositions').delete(ctl.compositions.delete);
 
 
 module.exports = router;

@@ -2,11 +2,10 @@ var storage = require('./storageRequester');
 
 module.exports = {
     getByProjectId: function (projectid, cb) {
-        storage('GET', "/tables/equipments/rows?filter=idprojects=" + "'" + projectid + "'", {}, function (error, response, body) {
+        storage('GET', "/tables/suppliers/rows?filter=idprojects=" + "'" + projectid + "'", {}, function (error, response, body) {
             if (!error) {
                 if (response.statusCode == 200) {
-                    json = JSON.parse(response.body);
-                    cb(false, json.list_of_rows);
+                    cb(false, JSON.parse(body).list_of_rows);
                 } else {
                     json = JSON.parse(response.body);
                     cb(false, json.message);
@@ -16,21 +15,20 @@ module.exports = {
             }
         })
     },
-    create: function (eqname, projectId, cb) {
+    create: function (name, projectId, cb) {
         console.log("project id : ", projectId);
-        storage('POST', "/tables/equipments/rows", [{ name: eqname, idprojects: projectId }], function (error, response, body) {
+        storage('POST', "/tables/suppliers/rows", [{ name: name, idprojects: projectId }], function (error, response, body) {
             if (!error) {
-                cb(false, {message: "Equipment created"});
+                cb(false, {message: "supplier created"});
             } else {
                 cb(true, "Relational Storage Component not responding");
             }
         })
     },
     delete: function (id, cb) {
-        console.log("deleting id ", id);
-        storage('DELETE', "/tables/equipments/rows?filter=idequipments=" + id, {}, function (error, response, body) {
+        storage('DELETE', "/tables/suppliers/rows?filter=idsuppliers=" + id, {}, function (error, response, body) {
             if (!error) {
-                cb(false, {message: "Equipment deleted"});
+                cb(false, {message: "supplier deleted"});
             } else {
                 cb(true, "Relational Storage Component not responding");
             }

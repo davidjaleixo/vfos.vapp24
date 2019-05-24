@@ -47,7 +47,7 @@ module.exports = {
         })
     },
     create: function(name, description, thold, cb){
-        storage('POST', "/tables/projects/rows", [{name: name, description: description, threshold: thold, status: true}], function(error, response, body){
+        storage('POST', "/tables/projects/rows", [{name: name, description: description, status: true}], function(error, response, body){
             if(!error){
                 cb(false, {message: "Project is created"})
             }else{
@@ -68,15 +68,6 @@ module.exports = {
         storage('PATCH', "/tables/projects/rows?filter=idprojects=" + projectId, {description: newDescription}, function(error, response, body){
             if(!error){
                 cb(false, {message: "Project is updated"});
-            }else{
-                cb(true, "Relational Storage Component not responding");
-            }
-        })
-    },
-    updateThold: function(projectId, newThold,cb){
-        storage('PATCH', "/tables/projects/rows?filter=idprojects=" + projectId, {threshold: newThold}, function(error, response, body){
-            if(!error){
-                cb(false, {message: "Project is updated"})
             }else{
                 cb(true, "Relational Storage Component not responding");
             }

@@ -6,15 +6,15 @@ module.exports = {
 
     create: function (req, res, next) {
 
-        //body: {value, equipment, project, threshold}
+        //body: {value, equipment, project, tholdmax, tholdmin}
 
-        if (req.body.value && req.body.equipment && req.body.project && req.body.threshold) {
+        if (req.body.value && req.body.supplier && req.body.project && req.body.tholdmax, req.body.tholdmin, req.body.composition) {
 
-            dal.slumps.create(req.body.value, req.body.equipment, req.body.project, req.user.id, function (err, answer) {
+            dal.slumps.create(req.body.value, req.body.supplier, req.body.project, req.user.id, req.body.composition, function (err, answer) {
                 if (!err) {
                     //TODO call next()
                     res.status(201).json(answer);
-                    next();
+                    //next();
                     
                 } else {
                     res.status(500).end();

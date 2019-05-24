@@ -3,7 +3,7 @@ var dal = require('../DAL');
 module.exports = {
     create: function (req, res) {
         if(req.body.name && req.body.projectid){
-            dal.equipments.create(req.body.name, req.body.projectid, function(err,response){
+            dal.suppliers.create(req.body.name, req.body.projectid, function(err,response){
                 if(!err){
                     res.status(201).end();
                 }else{
@@ -16,8 +16,8 @@ module.exports = {
     },
     get: function (req, res) {
         if (req.query.project) {
-            //get equipments from project
-            dal.equipments.getByProjectId(req.query.project, function (err, answer) {
+            //get compositions from project
+            dal.suppliers.getByProjectId(req.query.project, function (err, answer) {
                 if (!err) {
                     res.status(200).send(answer);
                 } else {
@@ -25,14 +25,14 @@ module.exports = {
                 }
             })
         } else {
-            //get all equipments
-            //not implemented - TODO
+            //get all suppliers
+            //not implemented - TODO or NOTTODO there is the question :)
             res.status(501).end();
         }
     },
     delete: function(req,res){
         if(req.query.id){
-            dal.equipments.delete(req.query.id, function(err,response){
+            dal.suppliers.delete(req.query.id, function(err,response){
                 if(!err){
                     res.status(200).end();
                 }else{
