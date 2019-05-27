@@ -16,12 +16,13 @@
         
       </div>
       <!--Slump table -->
-      <table class="table table-striped custab">
+      <table class="table table-striped custab mb-5">
         <thead>
           <tr>
             <th>Value</th>
-            <th>Equipment</th>
-            <th>Index</th>
+            <th>Composition</th>
+            <th>Supplier</th>
+            <th>Load</th>
             <th>Created by</th>
             <th>Created At</th>
           </tr>
@@ -31,12 +32,14 @@
 
 
             <td>{{ slump.value }}</td>
-            <td>{{ slump.equipment}}</td>
-            <td>
+            <td>{{ slump.compositionname }}</td>
+            <td>{{ slump.suppliername }}</td>
+            <!-- <td>
               <span *ngIf="slump.value > +project.threshold " class="badge badge-danger">+</span>
               <span *ngIf="+project.threshold > slump.value " class="badge badge-info">-</span>
               <span *ngIf="+project.threshold == slump.value " class="badge badge-success">=</span>
-            </td>
+            </td> -->
+            <td>{{ slump.loadid }}</td>
             <td>{{ slump.username }}</td>
             <td>{{ slump.date }}</td>
 
@@ -45,7 +48,7 @@
 
       </table>
       <!--End Slump table -->
-
+     
       <!-- Chart -->
       <div class="mb-5">
         <div style="display: block">
@@ -55,6 +58,7 @@
         </div>
       </div>
       <!-- Chart END -->
+      
     </div>
 
 

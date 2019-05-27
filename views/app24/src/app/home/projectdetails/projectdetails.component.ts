@@ -82,8 +82,11 @@ export class ProjectdetailsComponent implements OnInit {
 
   saveSlump() {
     if (this.f.supplierid.value != "" && this.f.value.value != 0) {
-      console.log("value:::::", this.f.supplierid.value.idequipments, this.project.idprojects);
-      this.slumpservice.registerTest(this.f.value.value, this.f.supplierid.value.idequipments, this.project.idprojects, this.project.threshold).subscribe(
+      console.log("value", this.f.value.value);
+      console.log("supplier:", this.f.supplierid.value.idsuppliers);
+      console.log("composition: ", this.f.compositionid.value.idcompositions);
+      
+      this.slumpservice.registerTest(this.f.value.value, this.f.compositionid.value.idcompositions, this.project.idprojects, this.f.supplierid.value.idsuppliers, this.f.loadid.value).subscribe(
         data => {
           console.log(data);
           this.alert.success("Test was saved")
@@ -92,7 +95,7 @@ export class ProjectdetailsComponent implements OnInit {
         this.alert.error("Error ")
       })
     }
-    console.log("eq: ", this.f.supplierid.value, "value ", this.f.value.value);
+    
   }
 
 }

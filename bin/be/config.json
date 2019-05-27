@@ -17,5 +17,8 @@
             "tables": "/INIT/tables",
             "views": "/INIT/views"
         }
+    },
+    "prediction": {
+        "min_samples": 3
     }
 }

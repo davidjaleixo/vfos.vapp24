@@ -1,6 +1,22 @@
 #!/usr/bin/env node
 
+var trend = require('trend');
+var predict = require('predict');
 
+var chart = [10, 9, 9, 8, 8, 7, 7, 6, 6, 5, 5];
+
+var growth = trend(chart, {
+  lastPoints: 10,
+  avgPoints: 221,
+  avgMinimum: 200,
+  reversed: false
+})
+
+console.log("growth: ", growth);
+console.log("next value 12: ", growth * 12);
+
+var lr = predict.linearRegression([10, 9, 9, 8, 8, 7, 7, 6, 6, 5, 5], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+console.log("next value of 12 position: ", lr.predict(12));
 
 
 /**

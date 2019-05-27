@@ -6,9 +6,9 @@ module.exports = {
 
     create: function (req, res, next) {
 
-        //body: {value, equipment, project, tholdmax, tholdmin, loadid}
+        //body: {value, supplier (id), project (id), composition (id), loadid}
 
-        if (req.body.value && req.body.supplier && req.body.project && req.body.tholdmax, req.body.tholdmin, req.body.composition, req.body.loadid) {
+        if (req.body.value && req.body.supplier && req.body.project && req.body.composition && req.body.loadid) {
 
             dal.slumps.create(req.body.value, req.body.supplier, req.body.project, req.user.id, req.body.composition, req.body.loadid, function (err, answer) {
                 if (!err) {

@@ -7,8 +7,8 @@ import { environment } from './../../environments/environment';
 export class SlumpService {
     constructor(private http: HttpClient) { }
     
-    registerTest(value, equipment, projectid, threshold){
-        return this.http.post(environment.apiUrl + '/slumptest', {value: value, equipment: equipment, project: projectid, threshold: threshold})
+    registerTest(value, compositionId, projectId, supplierId, loadId){
+        return this.http.post(environment.apiUrl + '/slumptest', {value: value, composition: compositionId, project: projectId, supplier: supplierId, loadid: loadId})
     }
     getTests(projectId){
         return this.http.get(environment.apiUrl + '/slumptest?project='+projectId);
