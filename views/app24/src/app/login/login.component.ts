@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthenticationService } from '../_services';
 import { first } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authentication: AuthenticationService
+    private authentication: AuthenticationService,
+    private alert: ToastrService
   ) { }
 
   ngOnInit() {
@@ -52,6 +54,7 @@ export class LoginComponent implements OnInit {
       error => {
         this.loading = false;
         //display error
+        this.alert.error("Wrong credentials")
       }
     )
   }

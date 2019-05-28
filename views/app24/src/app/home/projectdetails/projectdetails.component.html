@@ -45,8 +45,8 @@
           </div>
 
           <label for="supplier">Select supplier</label>
-          <select class="form-control  mb-3" formControlName="supplierid" id="supplier">
-            <option [ngValue]="avsuppliers" *ngFor="let avsuppliers of suppList">{{avsuppliers.name}}</option>
+          <select class="form-control  mb-3" formControlName="supplierid" id="supplier" required>
+            <option [ngValue]="avsuppliers" *ngFor="let avsuppliers of suppList" required>{{avsuppliers.name}}</option>
           </select>
 
           <div class="alert alert-danger" *ngIf="compositions.length == 0">
@@ -55,18 +55,18 @@
 
           <label for="composition">Select concrete composition</label>
           <select class="form-control mb-3" formControlName="compositionid" id="composition">
-            <option [ngValue]="avcompositions" *ngFor="let avcompositions of compositions">{{avcompositions.name}}</option>
+            <option required [ngValue]="avcompositions" *ngFor="let avcompositions of compositions">{{avcompositions.name}}</option>
           </select>
           
 
           <label for="loadid">Insert load identification</label>
           <div class="input-group  mb-3">
-            <input type="text" class="form-control" formControlName="loadid" placeholder="License plate or transport document">
+            <input required type="text" class="form-control" formControlName="loadid" placeholder="License plate or transport document">
           </div>
 
           <label for="slumpvalue">Register slump test value</label>
           <div class="input-group  mb-3">
-            <input type="number" min="0" inputmode="numeric" pattern="[0-9]*" class="form-control" formControlName="value">
+            <input required type="number" min="0" inputmode="numeric" pattern="[0-9]*" class="form-control" formControlName="value">
             <div class="input-group-append"><span class="input-group-text">mm</span></div>
           </div>
         </form>

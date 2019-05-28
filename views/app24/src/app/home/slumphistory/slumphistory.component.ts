@@ -5,6 +5,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { forEach } from '@angular/router/src/utils/collection';
 
+
+//charts
+import { Chart } from 'chart.js';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 @Component({
   selector: 'app-slumphistory',
   templateUrl: './slumphistory.component.html',
@@ -12,78 +17,117 @@ import { forEach } from '@angular/router/src/utils/collection';
 })
 export class SlumphistoryComponent implements OnInit {
 
+  loadingprojects: any;
   slumps: any;
   project: any;
+
+  //chart
+  chart = {};
+  composition_values = [];
+  x_values = [];
+  tholdmax = [];
+  tholdmin = [];
+
+  //form
+  available_compositions = [];
+  pick_composition : any;
+ 
   constructor(
     private slumpservice: SlumpService,
     private projectservice: ProjectService,
     private router: ActivatedRoute) { }
 
-  public barChartOptions = {
-    scaleShowVerticalLines: false,
-    responsive: true
-  };
-  public barChartLabels = [];
-  public barChartType = 'bar';
-  public barChartLegend = true;
-  public barChartData = [{ data: [], label: '' }];
-
-  private barras = [];
-
   ngOnInit() {
+    this.loadingprojects = true;
     this.projectservice.getProject(this.router.snapshot.paramMap.get("idproject")).subscribe(
       data => {
         this.project = data;
-
+        this.loadingprojects = false;
       }, err => {
         console.log(err);
       })
+
     this.slumpservice.getTests(this.router.snapshot.paramMap.get("idproject")).subscribe(
       data => {
         console.log("response", data);
         this.slumps = data
-        // this.slumps.forEach((eachRecord, id, arr) => {
-        //   //search the label ignoring the first cas
-        //   if (this.barras.length == 0) {
-        //     console.log("First ", eachRecord.compositionname);
-        //     this.barras.push({ data: [eachRecord.value], label: eachRecord.compositionname })
-        //   } else {
-        //     console.log("size:", this.barras.length);
-        //     this.barras.forEach((eachBarChart, index, array) => {
-        //       setTimeout(() => {
-        //         console.log("this composition ", eachRecord.compositionname, " vs  this label", eachBarChart.label)
-        //         let found = false;
-        //         if (eachBarChart.label == eachRecord.compositionname) {
-        //           //apply the data here
-        //           eachBarChart.data.push(eachRecord.value)
-        //           found = true;
-        //           console.log("we have found the place for ", eachRecord.compositionname)
-        //           console.log("----", this.barras);
-        //           return
-        //         }
+        //this.loading = false;
 
-        //         if (index === (array.length - 1) && !found) {
-        //           console.log("adding for", eachRecord.compositionname);
-        //           this.barras.push({ data: [eachRecord.value], label: eachRecord.compositionname })
+        this.slumps.forEach((eachSlump, index, array) => {
 
-        //         }
-        //       }, 500)
+          //create a list of compositions available
+          let found = false;
 
-        //     })
-        //   }
-        //   if (id === (arr.length - 1)) {
-        //     console.log("->", this.barras);
-        //     this.barChartData = this.barras;
-        //   }
-        // });
-        // this.barChartData[0].label= this.project.name;
-        // this.slumps.forEach(eachSlump => {
-        //   this.barChartLabels.push(eachSlump.date);
-        //   this.barChartData[0].data.push(eachSlump.value)
-        // });
+          if (this.available_compositions.length == 0) {
+            this.available_compositions.push(eachSlump.compositionname)
+          } else {
+            this.available_compositions.forEach((eachAvailable, index, array) => {
+              if (eachAvailable == eachSlump.compositionname) {
+                found = true;
+              }
+              if (index == (array.length - 1) && !found) {
+                this.available_compositions.push(eachSlump.compositionname);
+              }
+            })
+          }
+        });
       }, err => {
 
       })
   }
+
+  updatechart(){
+    this.composition_values = [];
+    this.x_values =[];
+    this.tholdmax = [];
+    this.tholdmin = [];
+
+    this.slumps.forEach((eachSlump, index, array) => {
+
+      if (eachSlump.compositionname == this.pick_composition) {
+        this.composition_values.push(eachSlump.value);
+        this.x_values.push(eachSlump.date);
+        this.tholdmax.push(eachSlump.tholdmax);
+        this.tholdmin.push(eachSlump.tholdmin);
+      }
+      if (index == array.length - 1) {
+        //create the chart
+
+        this.chart = {};
+        this.chart = new Chart('canvas', {
+          type: 'line',
+          data: {
+            labels: this.x_values,
+            datasets: [
+              {
+                label: this.pick_composition,
+                data: this.composition_values,
+                borderColor: '#461E68',
+                fill: false
+              }, {
+                label: "Max threshold",
+                data: this.tholdmax,
+                borderColor: 'red',
+                fill: false
+              }, {
+                label: "Min threshold",
+                data: this.tholdmin,
+                borderColor: 'grey',
+                fill: false
+              }
+            ]
+          }, options: {
+            legend: {
+              display: true
+            },
+            scales: {
+              xAxes: [{ display: true }],
+              yAxes: [{ display: true }]
+            }
+          }
+        });
+      }
+    });
+  } 
 
 }

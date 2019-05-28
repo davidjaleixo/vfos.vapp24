@@ -9,6 +9,7 @@ import { ReactiveFormsModule }    from '@angular/forms';
 
 import { ChartsModule } from 'ng2-charts';
 
+import {DataTableModule} from "angular-6-datatable";
 
 //import the home routes
 import { homeRoutes } from './home.routes';
@@ -19,13 +20,14 @@ import { SlumphistoryComponent } from './slumphistory/slumphistory.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 
 @NgModule({
+  declarations: [LayoutComponent, LandingComponent, ProjectsComponent, ProjectdetailsComponent, ProjectsettingsComponent, SlumphistoryComponent, NotificationsComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(homeRoutes),
     ReactiveFormsModule,
     FormsModule,
+    DataTableModule,
     ChartsModule
-  ],
-  declarations: [LayoutComponent, LandingComponent, ProjectsComponent, ProjectdetailsComponent, ProjectsettingsComponent, SlumphistoryComponent, NotificationsComponent]
+  ]
 })
 export class HomeModule { }

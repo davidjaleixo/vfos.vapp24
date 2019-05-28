@@ -16,7 +16,7 @@ module.exports = {
             }
         })
     },
-    create: function(name, tholdmin, tholdmax, project, cb){
+    create: function(name, tholdmax, tholdmin, project, cb){
         storage('POST', "/tables/compositions/rows", [{name: name, tholdmax: parseInt(tholdmax), tholdmin: parseInt(tholdmin), idprojects: project}], function(error, response, body){
             if(!error){
                 cb(false, {message: "Composition is created"})

@@ -12,6 +12,9 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
 
+//loadingbar
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+
 //import the app main routes
 import { APP_ROUTES } from "./app.routes";
 //import our modules
@@ -21,6 +24,8 @@ import { RegisterComponent } from './register/register.component';
 
 //import interceptors
 import { HttpRequestInterceptor, JwtInterceptor } from './_helpers';
+
+
 
 @NgModule({
   declarations: [
@@ -34,6 +39,7 @@ import { HttpRequestInterceptor, JwtInterceptor } from './_helpers';
     HomeModule,
     ReactiveFormsModule,
     HttpClientModule,
+    LoadingBarHttpClientModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot() // ToastrModule added
   ],

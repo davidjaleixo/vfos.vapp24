@@ -81,11 +81,10 @@ export class ProjectdetailsComponent implements OnInit {
   get f() { return this.newslump.controls }
 
   saveSlump() {
-    if (this.f.supplierid.value != "" && this.f.value.value != 0) {
-      console.log("value", this.f.value.value);
-      console.log("supplier:", this.f.supplierid.value.idsuppliers);
-      console.log("composition: ", this.f.compositionid.value.idcompositions);
+    if (this.f.supplierid.value != "" && this.f.value.value != 0 && this.f.compositionid.value.idcompositions != "" && this.f.loadid.value != "") {
+
       
+
       this.slumpservice.registerTest(this.f.value.value, this.f.compositionid.value.idcompositions, this.project.idprojects, this.f.supplierid.value.idsuppliers, this.f.loadid.value).subscribe(
         data => {
           console.log(data);
@@ -94,6 +93,8 @@ export class ProjectdetailsComponent implements OnInit {
 
         this.alert.error("Error ")
       })
+    }else{
+      this.alert.error("Please insert all the fields")
     }
     
   }

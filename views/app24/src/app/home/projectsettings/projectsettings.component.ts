@@ -215,15 +215,20 @@ export class ProjectsettingsComponent implements OnInit {
   }
 
   createComposition() {
-    this.compositionsservice.create(this.newComp.name, this.newComp.tholdmin, this.newComp.tholdmax, this.router.snapshot.paramMap.get("idproject")).subscribe(
-      data => {
-        this.alert.success("Composition created");
-        this.getCompositions();
-        this.newComp = { name: '', tholdmin: 0, tholdmax: 0};
-      }, err => {
-        this.alert.error("Composition was not created")
-      }
-    )
+    if(this.newComp.tholdmin < this.newComp.tholdmax){
+      this.compositionsservice.create(this.newComp.name, this.newComp.tholdmin, this.newComp.tholdmax, this.router.snapshot.paramMap.get("idproject")).subscribe(
+        data => {
+          this.alert.success("Composition created");
+          this.getCompositions();
+          this.newComp = { name: '', tholdmin: 0, tholdmax: 0};
+        }, err => {
+          this.alert.error("Composition was not created")
+        }
+      )
+    }else{
+      this.alert.error("Composition threshold must be Max bigger then Min")
+    }
+    
   }
 
   deleteComposition(id){
