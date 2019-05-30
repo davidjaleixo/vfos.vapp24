@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../_services';
 import { first } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
@@ -28,8 +28,8 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     //create the login form
     this.loginForm = this.fb.group({
-      username: [''],
-      password: ['']
+      username: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]
     });
 
     //get return url from route parameters or default to /
