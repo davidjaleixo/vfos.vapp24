@@ -46,11 +46,37 @@ module.exports = {
     get: function (req, res) {
         dal.notification.getByAccount(req.user.id, function (err, answer) {
             if (!err) {
-                
+
                 res.status(201).json(answer);
             } else {
                 res.status(500).end();
             }
         })
+    },
+    update: function (req, res) {
+        console.log(req.body);
+        if (req.body.hasOwnProperty('read') && req.query.id) {
+            if (req.body.read == true) {
+
+                dal.notification.unread(req.query.id, function (err, result) {
+                    if (!err) {
+                        res.status(201).json(result);
+                    } else {
+                        res.status(500).end();
+                    }
+                })
+            } else {
+
+                dal.notification.read(req.query.id, function (err, result) {
+                    if (!err) {
+                        res.status(201).json(result);
+                    } else {
+                        res.status(500).end();
+                    }
+                })
+            }
+        } else {
+            res.status(422).end();
+        }
     }
 }

@@ -19,16 +19,18 @@
         <thead>
           <tr>
             <th>Project</th>
-            <th>Slump value</th>
+            <th>Supplier</th>
+            <th>Composition</th>
+            <th>Slump sample</th>
             <th>Created At</th>
             <th>Options</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let noti of notifications">
-
-
-            <td>{{ noti.name }}</td>
+            <td>{{ noti.projectname }}</td>
+            <td>{{ noti.suppliername }}</td>
+            <td>{{ noti.compositionname }}</td>
             <td>{{ noti.value }}</td>
             <td>{{ noti.date}}</td>
             <td>

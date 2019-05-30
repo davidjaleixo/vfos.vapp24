@@ -25,5 +25,34 @@ export class NotificationsComponent implements OnInit {
       }
     )
   }
+  read(id){
+    
+    this.notificationservice.markasread(id).subscribe(
+      data => {
+        console.log(data);
+        this.notifications.forEach(eachNot => {
+          if(eachNot.idnotification == id){
+            eachNot.read = 't'
+          }
+        });
+      },err=>{
+        console.log(err)
+      }
+    )
+  }
+  unread(id){
+    this.notificationservice.markasunread(id).subscribe(
+      data => {
+        console.log(data);
+        this.notifications.forEach(eachNot => {
+          if(eachNot.idnotification == id){
+            eachNot.read = 'f'
+          }
+        });
+      },err=>{
+        console.log(err)
+      }
+    )
+  }
 
 }

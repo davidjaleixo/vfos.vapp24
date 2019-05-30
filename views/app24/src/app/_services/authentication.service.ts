@@ -32,9 +32,9 @@ export class AuthenticationService {
         return this.http.post(environment.apiUrl + '/register', { username: name, password: password, type: type})
         .pipe(map(response => {
             let token = response['token'];
-            if(token){
-                localStorage.setItem('token', JSON.stringify(token));
-            }
+            // if(token){
+            //     localStorage.setItem('token', JSON.stringify(token));
+            // }
             return token;
         }))
     }

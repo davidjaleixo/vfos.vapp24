@@ -44,8 +44,12 @@ export class RegisterComponent implements OnInit {
         .pipe(first())
         .subscribe(data => {
           console.log("register: ", data);
-          
-            this.router.navigate(['home'])
+            if(data == 'Email already Exists'){
+              this.alert.error("Username is not available")
+            }else{
+              this.router.navigate(['home'])
+            }
+            
           
         }, err => {
           console.log(err);

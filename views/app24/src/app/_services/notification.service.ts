@@ -6,9 +6,15 @@ import { environment } from './../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
     constructor(private http: HttpClient) { }
-    
-    getNotifications(){
+
+    getNotifications() {
         return this.http.get(environment.apiUrl + '/notifications');
+    }
+    markasread(id) {
+        return this.http.patch(environment.apiUrl + '/notifications?id=' + id, { read: true });
+    }
+    markasunread(id) {
+        return this.http.patch(environment.apiUrl + '/notifications?id=' + id, { read: false });
     }
 
 }

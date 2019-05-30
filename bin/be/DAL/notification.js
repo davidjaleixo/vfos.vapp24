@@ -25,5 +25,24 @@ module.exports = {
                 cb(true, "Relational Storage Component not responding");
             }
         })
+    },
+    read: function(notificationId, cb){
+        storage('PATCH', "/tables/notifications/rows?filter=idnotification=" + notificationId, {read: true}, function(error, response, body){
+            if(!error){
+                cb(false, {message: "Notifications was marked as read"})
+            }else{
+                cb(true, "Relational Storage Component not responding");
+            }
+        })
+    },
+    unread: function(notificationId, cb){
+        storage('PATCH', "/tables/notifications/rows?filter=idnotification=" + notificationId, {read: false}, function(error, response, body){
+            if(!error){
+                cb(false, {message: "Notifications was marked as unread"})
+            }else{
+                cb(true, "Relational Storage Component not responding");
+            }
+        })
     }
+    
 }

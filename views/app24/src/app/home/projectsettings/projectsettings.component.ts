@@ -17,6 +17,7 @@ export class ProjectsettingsComponent implements OnInit {
   supplierName: String;
   users: any;
   availableusers: any;
+  groupedusers: any = [{group: 'Admins', items:[]},{group: 'Contractors', items:[]},{group: 'Providers', items:[]}]
   selectedUser: any;
   user: any;
   newUserForm: FormGroup;
@@ -61,7 +62,11 @@ export class ProjectsettingsComponent implements OnInit {
     this.supplierName = '';
 
     this.newComp = { name: '', tholdmin: 0, tholdmax: 0 };
-
+    
+    //define the newUserForm
+    this.newUserForm = this.fb.group({
+      newuser: [''],
+    });
 
     this.projectservice.getProject(this.router.snapshot.paramMap.get("idproject")).subscribe(
       data => {
@@ -89,9 +94,27 @@ export class ProjectsettingsComponent implements OnInit {
       this.accountservice.getAvailableUsers(this.user.id).subscribe(
         data => {
           this.availableusers = data;
-          this.newUserForm = this.fb.group({
-            user: [this.availableusers[0]],
+          this.availableusers.forEach(eachUser => {
+            //contractors
+            if(eachUser.idroles == 1){
+              this.groupedusers.forEach(eachGroup => {
+                if(eachGroup.group == "Contractors"){ eachGroup.items.push(eachUser)}
+              })
+            }
+            //admins
+            if(eachUser.idroles == 2){
+              this.groupedusers.forEach(eachGroup => {
+                if(eachGroup.group == "Admins"){ eachGroup.items.push(eachUser)}
+              })
+            }
+            //providers
+            if(eachUser.idroles == 3){
+              this.groupedusers.forEach(eachGroup => {
+                if(eachGroup.group == "Providers"){ eachGroup.items.push(eachUser)}
+              })
+            }
           });
+          
         }, err => {
           console.log("available users err: ", err);
         }
@@ -191,8 +214,10 @@ export class ProjectsettingsComponent implements OnInit {
       this.alert.error("Supplier not deleted")
     })
   }
+  get f() { return this.newUserForm.controls }
   addUser() {
-    this.userservice.allocate(this.newUserForm.controls.user.value.idaccounts, this.project.idprojects).subscribe(
+    console.log("selected user:",this.f.newuser.value);
+    this.userservice.allocate(this.f.newuser.value.idaccounts, this.project.idprojects).subscribe(
       data => {
         this.alert.success("User has been added to this project");
         this.getUsersOnProject();

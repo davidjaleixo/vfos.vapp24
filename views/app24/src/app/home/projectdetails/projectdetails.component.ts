@@ -15,9 +15,10 @@ export class ProjectdetailsComponent implements OnInit {
   user: any;
   suppList: any;
 
-  compositions:any;
+  compositions: any;
 
   newslump: FormGroup;
+
 
   constructor(
     private projectservice: ProjectService,
@@ -80,23 +81,42 @@ export class ProjectdetailsComponent implements OnInit {
   //getter
   get f() { return this.newslump.controls }
 
+
+
   saveSlump() {
+
     if (this.f.supplierid.value != "" && this.f.value.value != 0 && this.f.compositionid.value.idcompositions != "" && this.f.loadid.value != "") {
+      console.log("max:", this.f.compositionid.value.tholdmax);
+      console.log("min:", this.f.compositionid.value.tholdmin);
+      if (this.f.value.value >= this.f.compositionid.value.tholdmax || this.f.value.value <= this.f.compositionid.value.tholdmin) {
 
-      
+        var result = confirm("The slump test value is out of threshold's range - Notification will be sent!");
+        if (result) {
+          this.slumpservice.registerTest(this.f.value.value, this.f.compositionid.value.idcompositions, this.project.idprojects, this.f.supplierid.value.idsuppliers, this.f.loadid.value).subscribe(
+            data => {
+              this.alert.success("Test was saved")
+              this.newslump.reset();
+            }, err => {
+              this.alert.error("Error ")
+            })
+        }else{
+          this.alert.info("Test was not stored by your decision");
 
-      this.slumpservice.registerTest(this.f.value.value, this.f.compositionid.value.idcompositions, this.project.idprojects, this.f.supplierid.value.idsuppliers, this.f.loadid.value).subscribe(
-        data => {
-          console.log(data);
-          this.alert.success("Test was saved")
-      }, err => {
+        }
 
-        this.alert.error("Error ")
-      })
-    }else{
+      } else {
+        this.slumpservice.registerTest(this.f.value.value, this.f.compositionid.value.idcompositions, this.project.idprojects, this.f.supplierid.value.idsuppliers, this.f.loadid.value).subscribe(
+          data => {
+            this.alert.success("Test was saved")
+            this.newslump.reset();
+          }, err => {
+
+            this.alert.error("Error ")
+          })
+      }
+    } else {
       this.alert.error("Please insert all the fields")
     }
-    
   }
 
 }

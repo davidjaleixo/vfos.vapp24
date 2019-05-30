@@ -14,7 +14,7 @@ module.exports = {
                 if (!err) {
                     //TODO call next()
                     res.status(201).json(answer);
-                    //next();
+                    next();
                     
                 } else {
                     res.status(500).end();

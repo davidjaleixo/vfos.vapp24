@@ -214,8 +214,16 @@
         <div class="form-group">
           <form [formGroup]="newUserForm">
             <label for="userselect" id="idAccount">Select user</label>
-            <select class="form-control" formControlName="username" id="userselect">
-              <option [ngValue]="avuser" *ngFor="let avuser of availableusers">{{avuser.username}}</option>
+            <!-- <select class="form-control" formControlName="newuser" id="userselect">
+              <option [ngValue]="avuser" *ngFor="let avuser of availableusers | filter: {idroles: 2}">
+                {{avuser.username}} </option>
+            </select> -->
+
+            <select class="form-control" formControlName="newuser" id="userselect">
+              <optgroup *ngFor="let grp of groupedusers" label="{{grp.group}}">
+                <option [ngValue]="avuser" *ngFor="let avuser of grp.items">
+                  {{avuser.username}} </option>
+              </optgroup>
             </select>
 
 

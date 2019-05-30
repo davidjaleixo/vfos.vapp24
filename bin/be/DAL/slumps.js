@@ -20,18 +20,18 @@ module.exports = {
             }
         })
     },
-    getByProject: function(projectId, cb){
-        storage('GET', "/tables/slump_history/rows?filter=idprojects=" + projectId, {}, function(err,response, body){
-            if(!err){
+    getByProject: function (projectId, cb) {
+        storage('GET', "/tables/slump_history/rows?filter=idprojects=" + projectId, {}, function (err, response, body) {
+            if (!err) {
                 cb(false, JSON.parse(body).list_of_rows)
             } else {
                 cb(true, "Relational Storage Component not responding");
             }
         })
     },
-    getLastByProject: function(projectId, cb){
-        storage('GET', "/tables/slump_history/rows?filter=idprojects=" + projectId + "&order_by=idslumptests", {}, function(err,response, body){
-            if(!err){
+    getLastByProject: function (projectId, cb) {
+        storage('GET', "/tables/slump_history/rows?filter=idprojects=" + projectId + "&order_by=idslumptests", {}, function (err, response, body) {
+            if (!err) {
                 cb(false, JSON.parse(body).list_of_rows[0])
             } else {
                 cb(true, "Relational Storage Component not responding");
@@ -42,6 +42,17 @@ module.exports = {
         storage('DELETE', "/tables/slumptests/rows?filter=idslumptests=" + slumptestId, {}, function (error, response, body) {
             if (!error) {
                 cb(false, { message: "Slumptest is deleted" })
+            } else {
+                cb(true, "Relational Storage Component not responding");
+            }
+        })
+    },
+    getByProjectAndCompositionAndSupplier: function (projectId, compositionId, supplierId, cb) {
+
+        storage('GET', "/tables/slump_history/rows?filter=idprojects=" + projectId + " and idcompositions=" + compositionId + " and idsuppliers=" + supplierId + "&order_by=date", {}, function (err, response, body) {
+
+            if (!err) {
+                cb(false, JSON.parse(body).list_of_rows)
             } else {
                 cb(true, "Relational Storage Component not responding");
             }

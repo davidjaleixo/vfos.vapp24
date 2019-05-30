@@ -19,6 +19,13 @@
         }
     },
     "prediction": {
-        "min_samples": 3
-    }
+        "desv_max": 0.1,
+        "desv_min": 0.1,
+        "amount_samples": 5
+    },
+    "email":{
+		"USEREMAIL": "vfos.notify@gmail.com",
+		"USERPWD": "21645FCTunl",
+		"EMAILON": "false"
+	}
 }

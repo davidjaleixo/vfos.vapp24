@@ -6,5 +6,6 @@ module.exports = {
     accounts: require('./accounts'),
     slumptests: require('./slumptests'),
     notification: require('./notification'),
-    compositions: require('./compositions')
+    compositions: require('./compositions'),
+    prediction: require('./prediction')
 }

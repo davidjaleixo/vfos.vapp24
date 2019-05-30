@@ -32,16 +32,21 @@ router.route('/users').delete(ctl.users.delete);
 router.route('/accounts').get(ctl.accounts.get);
 
 //slumps
-router.route('/slumptest').post(ctl.slumptests.create, ctl.notification.validate);
+router.route('/slumptest').post(ctl.slumptests.create, ctl.prediction.predictNext);
 router.route('/slumptest').get(ctl.slumptests.get);
 
 //notifications
 router.route('/notifications').get(ctl.notification.get);
+router.route('/notifications').patch(ctl.notification.update);
 
 //compositions
 router.route('/compositions').post(ctl.compositions.create);
 router.route('/compositions').get(ctl.compositions.get);
 router.route('/compositions').delete(ctl.compositions.delete);
+
+//prediction
+router.route('/prediction').post(ctl.prediction.predictNext);
+
 
 
 module.exports = router;
