@@ -67,7 +67,7 @@ var handleNotification = function (input, domain, userid) {
                                         if (!error) {
                                             console.log("Email sent to", info.accepted);
                                         } else {
-                                            console.log(err);
+                                            console.log(error);
                                         }
                                     })
 
@@ -129,7 +129,7 @@ module.exports = {
                             if (parseInt(slumpresults[slumpresults.length - 1].value) <= parseInt(slumpresults[0].tholdmin) || parseInt(slumpresults[0].tholdmax) <= parseInt(slumpresults[slumpresults.length - 1].value)) {
                                 // latest slump test outside threshold
                                 console.log("Latest slump test outside threshold");
-                                handleNotification({ result: output[3], prediction: nextValue, idcompositions: req.body.composition, idsuppliers: req.body.supplier, idprojects: req.body.project, maxmargin: slumpresults[0].tholdmax, minmargin: slumpresults[0].tholdmin, slumptestid: slumpresults[slumpresults.length - 1].idslumptests }, req.hostname, req.user.id)
+                                handleNotification({ result: output[3], prediction: slumpresults[slumpresults.length - 1].value, idcompositions: req.body.composition, idsuppliers: req.body.supplier, idprojects: req.body.project, maxmargin: slumpresults[0].tholdmax, minmargin: slumpresults[0].tholdmin, slumptestid: slumpresults[slumpresults.length - 1].idslumptests }, req.hostname, req.user.id)
                             }
                             return
                         }
