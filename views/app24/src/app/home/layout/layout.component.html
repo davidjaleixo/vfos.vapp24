@@ -42,8 +42,8 @@
                     </div>
                     <!-- <img class="notification-img" src="https://placehold.it/48x48" alt="Icone Notification"> -->
                     <div class="notifications-body">
-                      <p class="notification-texte">Project {{unreadnots.projectname}}</p>
-                      <p class="notification-texte">Composition {{unreadnots.compositionname}} -
+                      <p class="notification-texte">Project: {{unreadnots.projectname}}</p>
+                      <p class="notification-texte">Composition: {{unreadnots.compositionname}} -
                         <span *ngIf="unreadnots.type == 'predicted'"
                           class="badge badge-warning">{{unreadnots.type}}</span>
                         <span *ngIf="unreadnots.type == 'measured'"
@@ -51,7 +51,7 @@
                         {{unreadnots.predictedvalue}} mm
                       </p>
                       <p class="notification-texte">
-                        Supplier {{unreadnots.suppliername}}
+                        Supplier: {{unreadnots.suppliername}}
                       </p>
                       <p class="notification-date text-muted">
                         <i class="fa fa-clock-o" aria-hidden="true"></i> {{unreadnots.date}}
@@ -75,7 +75,6 @@
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
               {{user.username}}
-              <span *ngIf="unread.length > 0" class="btn btn-danger badge badge-danger">{{unread.length}}</span>
             </a>
 
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
