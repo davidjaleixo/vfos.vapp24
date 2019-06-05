@@ -2,12 +2,14 @@ var storage = require('./storageRequester');
 
 module.exports = {
 
-    create: function (idaccount, idslumptest, slumptestdate, cb) {
+    create: function (idaccount, idslumptest, slumptestdate, notificationtype, predictedvalue, cb) {
         let data = [{
             idaccounts: idaccount,
             idslumptests: idslumptest,
             date: slumptestdate,
-            read: false
+            read: false,
+            type: notificationtype,
+            predictedvalue: predictedvalue
         }];
         storage('POST', "/tables/notifications/rows", data, function (error, response, body) {
             if (!error) {

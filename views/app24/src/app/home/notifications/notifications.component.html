@@ -9,10 +9,10 @@
 
     <div class="rows mb-3">
       <div>
-        <h1>Notifications 
-          
+        <h1>Notifications
+
         </h1>
-        
+
       </div>
       <!--Notifications table -->
       <table class="table">
@@ -22,6 +22,7 @@
             <th>Supplier</th>
             <th>Composition</th>
             <th>Slump sample</th>
+            <th>Type</th>
             <th>Created At</th>
             <th>Options</th>
           </tr>
@@ -31,11 +32,16 @@
             <td>{{ noti.projectname }}</td>
             <td>{{ noti.suppliername }}</td>
             <td>{{ noti.compositionname }}</td>
-            <td>{{ noti.value }}</td>
+            <td *ngIf="noti.type == 'measured' ">{{ noti.value }}</td>
+            <td *ngIf="noti.type == 'predicted' ">{{ noti.predictedvalue }}</td>
+            <td *ngIf="noti.type == 'predicted' "><span class="badge badge-warning">Predicted</span></td>
+            <td *ngIf="noti.type == 'measured' "><span class="badge badge-danger">Measured</span></td>
             <td>{{ noti.date}}</td>
             <td>
-              <button *ngIf="noti.read == 'f' " (click)="read(noti.idnotification)" class="btn-sm btn-default">Read</button>
-              <button *ngIf="noti.read == 't' " (click)="unread(noti.idnotification)" class="btn-sm btn-default">Unread</button>
+              <button *ngIf="noti.read == 'f' " (click)="read(noti.idnotification)"
+                class="btn-sm btn-default">Read</button>
+              <button *ngIf="noti.read == 't' " (click)="unread(noti.idnotification)"
+                class="btn-sm btn-default">Unread</button>
             </td>
 
           </tr>
@@ -44,7 +50,7 @@
       </table>
       <!--End Notifications table -->
 
-      
+
     </div>
 
 

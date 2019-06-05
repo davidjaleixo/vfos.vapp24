@@ -73,7 +73,7 @@ var handleNotification = function (input, domain, userid) {
 
                                     //create notifications
                                     //, slumptestid: slumpresults[slumpresults.length - 1].idslumptests
-                                    dal.notification.create(userinproject[index].idaccounts, input.slumptestid, new Date().toUTCString(), function(errNotification, ResultNofitication){
+                                    dal.notification.create(userinproject[index].idaccounts, input.slumptestid, new Date().toUTCString(), input.result.type, input.prediction, function(errNotification, ResultNofitication){
                                         if(!errNotification){
                                             console.log("Notification created for user",  userinproject[index].username);
                                         }else{
