@@ -58,7 +58,7 @@ var handleNotification = function (input, domain, userid) {
                                         EMAILTITLE: "Concrete Feedback Notification",
                                         EMAILPREHEADER: "Concrete Feedback Notification",
                                         EMAILBODY: "Dear " + userinproject[index].username + ", You've received this e-mail because one Slump test sample related to the project " + thisproject.name + " presents a " + input.result.type + " value " + input.result.message + ". For further information please refer to the application link below.",
-                                        EMAILC2AHREF: "http://" + domain + "/home/notifications",
+                                        EMAILC2AHREF: "http://" + domain + "/davidapp/home/notifications",
                                         EMAILC2ANAME: "Check your notifications",
                                         EMAILAPPNAME: "Concrete Feedback"
                                     }
