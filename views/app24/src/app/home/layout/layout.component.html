@@ -13,7 +13,7 @@
 
           <!-- example finish -->
 
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" *ngIf="user">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
 
@@ -21,27 +21,6 @@
               <span *ngIf="unread.length > 0" class="badge badge badge-notify">{{unread.length}}</span>
 
             </a>
-
-            <!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              
-                <div class="card">
-                    <div class="card-header">
-                      Featured
-                    </div>
-                    <div class="card-body">
-                      <h5 class="card-title">Special title treatment</h5>
-                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                  </div>
-
-              <a class="dropdown-item" href="#">Not 1</a>
-              <a class="dropdown-item" href="#">Not 2</a>
-              <a class="dropdown-item" href="#">Not 3</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" routerLink="notifications">View all</a>
-            </div> -->
-
             <div *ngIf="unread.length == 0" class="dropdown-menu notification-dropdown-menu" aria-labelledby="notifications-dropdown">
               <h6 class="dropdown-header">Seems you have no unread notifications...</h6>
               <!-- footer -->
