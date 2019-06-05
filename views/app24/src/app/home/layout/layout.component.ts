@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService, NotificationService } from '../../_services';
 import { forEach } from '@angular/router/src/utils/collection';
+import { AstMemoryEfficientTransformer } from '@angular/compiler';
 
 @Component({
   selector: 'app-layout',
@@ -13,7 +14,7 @@ export class LayoutComponent implements OnInit {
   notifications: any;
   unread: any;
 
-  constructor(private authentication: AuthenticationService, private notification: NotificationService) { }
+  constructor(private authentication: AuthenticationService, private notificationservice: NotificationService) { }
 
   ngOnInit() {
 
@@ -23,8 +24,9 @@ export class LayoutComponent implements OnInit {
     }
     this.unread = [];
     //get unread notifications
-    this.notification.getNotifications().subscribe(
+    this.notificationservice.getNotifications().subscribe(
       data => {
+
         this.notifications = data;
         this.notifications.forEach(eachNotification => {
           if(eachNotification.read == 'f'){
@@ -40,7 +42,33 @@ export class LayoutComponent implements OnInit {
   logout(){
     this.authentication.logout();
   }
+  
+  read(id){
+    
+    this.notificationservice.markasread(id).subscribe(
+      data => {
+        console.log(data);
+        this.unread.forEach((eachNot,index,array) => {
+          if(eachNot.idnotification == id){
+            this.unread.splice(index,1)
+            //eachNot.read = 't'
+          }
+        });
+      },err=>{
+        console.log(err)
+      }
+    )
+  }
 
+  unreadall(){
+    this.unread.forEach((eachUnread, idx, arr) => {
+      this.notificationservice.markasread(eachUnread.idnotification).subscribe(data => {
+        this.unread.splice(idx,1);
+      }, err => {
+        console.log(err)
+      })
+    })
+  }
 
 
 }

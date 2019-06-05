@@ -58,7 +58,7 @@ module.exports = {
         if (req.body.hasOwnProperty('read') && req.query.id) {
             if (req.body.read == true) {
 
-                dal.notification.unread(req.query.id, function (err, result) {
+                dal.notification.read(req.query.id, function (err, result) {
                     if (!err) {
                         res.status(201).json(result);
                     } else {
@@ -67,7 +67,7 @@ module.exports = {
                 })
             } else {
 
-                dal.notification.read(req.query.id, function (err, result) {
+                dal.notification.unread(req.query.id, function (err, result) {
                     if (!err) {
                         res.status(201).json(result);
                     } else {
