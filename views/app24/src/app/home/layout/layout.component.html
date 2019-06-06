@@ -21,17 +21,20 @@
               <span *ngIf="unread.length > 0" class="badge badge badge-notify">{{unread.length}}</span>
 
             </a>
-            <div *ngIf="unread.length == 0" class="dropdown-menu notification-dropdown-menu" aria-labelledby="notifications-dropdown">
+            <div *ngIf="unread.length == 0" class="dropdown-menu notification-dropdown-menu"
+              aria-labelledby="notifications-dropdown">
               <h6 class="dropdown-header">Seems you have no unread notifications...</h6>
               <!-- footer -->
               <a class="dropdown-item dropdown-notification-all" routerLink="notifications">
-                  View your previous notifications
-                </a>
+                View your previous notifications
+              </a>
             </div>
 
-            <div *ngIf="unread.length > 0" class="dropdown-menu notification-dropdown-menu" aria-labelledby="notifications-dropdown">
-              <h6 class="dropdown-header">{{unread.length}} unread notifications <a class="text-right" (click)="unreadall()"> Mark all as read</a></h6>
-              
+            <div *ngIf="unread.length > 0" class="dropdown-menu notification-dropdown-menu"
+              aria-labelledby="notifications-dropdown">
+              <h6 class="dropdown-header">{{unread.length}} unread notifications <a class="text-right"
+                  (click)="unreadall()"> Mark all as read</a></h6>
+
 
               <div class="notifications-container">
 
@@ -43,13 +46,17 @@
                     <!-- <img class="notification-img" src="https://placehold.it/48x48" alt="Icone Notification"> -->
                     <div class="notifications-body">
                       <p class="notification-texte">Project: {{unreadnots.projectname}}</p>
-                      <p class="notification-texte">Composition: {{unreadnots.compositionname}} -
-                        <span *ngIf="unreadnots.type == 'predicted'"
-                          class="badge badge-warning">{{unreadnots.type}}</span>
-                        <span *ngIf="unreadnots.type == 'measured'"
-                          class="badge badge-danger">{{unreadnots.type}}</span>
+                      <p *ngIf="unreadnots.type == 'predicted'" class="notification-texte">Composition:
+                        {{unreadnots.compositionname}} -
+                        <span class="badge badge-warning">{{unreadnots.type}}</span>
                         {{unreadnots.predictedvalue}} mm
                       </p>
+                      <p *ngIf="unreadnots.type == 'measured'" class="notification-texte">Composition:
+                        {{unreadnots.compositionname}} -
+                        <span class="badge badge-danger">{{unreadnots.type}}</span>
+                        {{unreadnots.value}} mm
+                      </p>
+
                       <p class="notification-texte">
                         Supplier: {{unreadnots.suppliername}}
                       </p>
