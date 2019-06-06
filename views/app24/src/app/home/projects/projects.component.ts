@@ -11,23 +11,26 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class ProjectsComponent implements OnInit {
 
   projectsList: any;
+  projectsListFiltered = [];
   user: any;
   newProjectForm: FormGroup;
 
   constructor(
-    private ProjectService: ProjectService, 
+    private ProjectService: ProjectService,
     private authentication: AuthenticationService,
     private fb: FormBuilder) { }
 
   ngOnInit() {
     //get user details
     let user = this.authentication.getUserDetails();
-    if (user != null){
+    if (user != null) {
       this.user = user
     }
 
     this.ProjectService.getAll().subscribe(answer => {
       this.projectsList = answer;
+      //present the filtered project by ongoing
+      this.projectsListFiltered = this.projectsList.filter(projects => projects.status == 't')
       console.log(answer);
     }, err => {
       //TODO
@@ -39,17 +42,26 @@ export class ProjectsComponent implements OnInit {
     });
   }
   //form getter
-  get f() { return this.newProjectForm.controls}
+  get f() { return this.newProjectForm.controls }
 
-  onSubmit(){
+  onSubmit() {
     this.ProjectService.create(this.f.name.value, this.f.description.value).subscribe(data => {
       //add the new project in the list
       this.projectsList.push(data);
       this.newProjectForm.reset();
-    }, err => { 
+    }, err => {
       console.log(err);
 
     })
+  }
+  onChangeFilter(selection) {
+
+    if(selection == 'Ongoing'){
+      this.projectsListFiltered = this.projectsList.filter(projects => projects.status == 't')
+    }else{
+      this.projectsListFiltered = this.projectsList.filter(projects => projects.status == 'f')
+    }
+    
   }
 
 }

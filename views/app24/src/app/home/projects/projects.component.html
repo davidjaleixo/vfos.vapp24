@@ -10,11 +10,11 @@
 
 
       <div>
-        <h1>Projects list 
+        <h1>Projects list
           <button ng-if="user.role==2" href="#newProjectModal" data-toggle="modal"
-          class="float-right btn btn-vfos">New</button>
+            class="float-right btn btn-vfos">New</button>
         </h1>
-        
+
       </div>
 
       <!-- <div class="col-sm col-md-auto justify-content-md-center">
@@ -22,6 +22,23 @@
         </div> -->
 
     </div>
+
+    <hr />
+    <div class="row mb-3">
+      <div class="col">
+
+          <label for="filter" id="labelfilter">Filter by</label>
+        <select class="form-control" id="filter" (change)="onChangeFilter($event.target.value)">
+          <optgroup label="Filter by">
+            <option> Ongoing </option>
+            <option> Stopped </option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="col"></div>
+      <div class="col"></div>
+    </div>
+    
     <table class="table table-striped custab">
       <thead>
         <tr>
@@ -32,7 +49,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let proj of projectsList">
+        <tr *ngFor="let proj of projectsListFiltered">
 
 
           <td><a routerLink="{{proj.idprojects}}">{{ proj.name }}</a></td>
