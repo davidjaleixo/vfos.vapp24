@@ -11,6 +11,8 @@ import { ChartsModule } from 'ng2-charts';
 
 import {DataTableModule} from "angular-6-datatable";
 
+import { NgxSpinnerModule } from 'ngx-spinner';
+
 //import the home routes
 import { homeRoutes } from './home.routes';
 import { ProjectsComponent } from './projects/projects.component';
@@ -27,7 +29,8 @@ import { NotificationsComponent } from './notifications/notifications.component'
     ReactiveFormsModule,
     FormsModule,
     DataTableModule,
-    ChartsModule
+    ChartsModule,
+    NgxSpinnerModule
   ]
 })
 export class HomeModule { }

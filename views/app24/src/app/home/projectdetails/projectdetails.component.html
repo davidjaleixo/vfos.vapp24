@@ -34,46 +34,79 @@
 <div class="modal fade center" id="slumpTestModal" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
+
+      <!-- loading spinner start -->
+      <ngx-spinner [fullScreen]="false" type="ball-clip-rotate-multiple" size="medium">
+        <p class="loading">Loading prediction</p>
+      </ngx-spinner>
+      <!-- loading spinner ends -->
+
       <div class="modal-header">
         <h2>New Slump test</h2>
       </div>
+
+
       <div class="modal-body">
 
-        <form [formGroup]="newslump">
-          <div class="alert alert-danger" *ngIf="suppList.length == 0">
-            Please register a new supplier in project settings.
+        <div *ngIf="nextaction.show">
+          <div class="alert alert-danger">
+            From this slump test value we predict that the next sample for the same composition will be
+            <strong>{{nextaction.value}} mm</strong> presenting a deviation of <strong>{{nextaction.deviation | percent}}</strong>
           </div>
-
-          <label for="supplier">Select supplier</label>
-          <select class="form-control  mb-3" formControlName="supplierid" id="supplier" required>
-            <option [ngValue]="avsuppliers" *ngFor="let avsuppliers of suppList" required>{{avsuppliers.name}}</option>
-          </select>
-
-          <div class="alert alert-danger" *ngIf="compositions.length == 0">
-            Please register a new composition in project settings.
+          <div class="alert alert-info">
+            The predicted value is {{nextaction.message }}
           </div>
+          <hr/>
+          <p>Do you want to notify all the project team about it ?</p>
+        </div>
 
-          <label for="composition">Select concrete composition</label>
-          <select class="form-control mb-3" formControlName="compositionid" id="composition">
-            <option required [ngValue]="avcompositions" *ngFor="let avcompositions of compositions">{{avcompositions.name}}</option>
-          </select>
-          
 
-          <label for="loadid">Insert load identification</label>
-          <div class="input-group  mb-3">
-            <input required type="text" class="form-control" formControlName="loadid" placeholder="License plate or transport document">
-          </div>
+        <div *ngIf="!nextaction.show">
+          <form [formGroup]="newslump">
+            <div class="alert alert-danger" *ngIf="suppList.length == 0">
+              Please register a new supplier in project settings.
+            </div>
 
-          <label for="slumpvalue">Register slump test value</label>
-          <div class="input-group  mb-3">
-            <input required type="number" min="0" inputmode="numeric" pattern="[0-9]*" class="form-control" formControlName="value">
-            <div class="input-group-append"><span class="input-group-text">mm</span></div>
-          </div>
-        </form>
+            <label for="supplier">Select supplier</label>
+            <select class="form-control  mb-3" formControlName="supplierid" id="supplier" required>
+              <option [ngValue]="avsuppliers" *ngFor="let avsuppliers of suppList" required>{{avsuppliers.name}}
+              </option>
+            </select>
+
+            <div class="alert alert-danger" *ngIf="compositions.length == 0">
+              Please register a new composition in project settings.
+            </div>
+
+            <label for="composition">Select concrete composition</label>
+            <select class="form-control mb-3" formControlName="compositionid" id="composition">
+              <option required [ngValue]="avcompositions" *ngFor="let avcompositions of compositions">
+                {{avcompositions.name}}</option>
+            </select>
+
+
+            <label for="loadid">Insert load identification</label>
+            <div class="input-group  mb-3">
+              <input required type="text" class="form-control" formControlName="loadid"
+                placeholder="License plate or transport document">
+            </div>
+
+            <label for="slumpvalue">Register slump test value</label>
+            <div class="input-group  mb-3">
+              <input required type="number" min="0" inputmode="numeric" pattern="[0-9]*" class="form-control"
+                formControlName="value">
+              <div class="input-group-append"><span class="input-group-text">mm</span></div>
+            </div>
+          </form>
+        </div>
       </div>
-      <div class="modal-footer">
-        <button (click)="saveSlump()" data-dismiss="modal" class="btn btn-vfos">Save</button>
+      <div class="modal-footer" *ngIf="!nextaction.show">
+        <button (click)="saveSlump()" class="btn btn-vfos">Save</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+
+      <div class="modal-footer" *ngIf="nextaction.show">
+        <button (click)="nextactionSend()" class="btn btn-vfos"><i class="fa fa-bell-o"></i> Send warning</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="nextactionNo()"> <i class="fa fa-bell-slash-o"></i> No</button>
       </div>
     </div>
   </div>

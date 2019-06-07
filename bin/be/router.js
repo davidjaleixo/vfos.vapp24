@@ -38,6 +38,7 @@ router.route('/slumptest').get(ctl.slumptests.get);
 //notifications
 router.route('/notifications').get(ctl.notification.get);
 router.route('/notifications').patch(ctl.notification.update);
+router.route('/notifications').post(ctl.notification.harmonizeRequest, ctl.notification.create);
 
 //compositions
 router.route('/compositions').post(ctl.compositions.create);
@@ -46,7 +47,5 @@ router.route('/compositions').delete(ctl.compositions.delete);
 
 //prediction
 router.route('/prediction').post(ctl.prediction.predictNext);
-
-
 
 module.exports = router;

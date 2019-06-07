@@ -3,11 +3,7 @@ var predict = require('predict');
 const config = require('../config.json');
 
 
-/**email stuff */
-var email = require('nodemailer');
-var handlebars = require('handlebars');
-var fs = require('fs');
-/**email stuff */
+
 
 const output = [
     { code: 0, message: "Inside thresholds", type: "predicted" },
@@ -16,17 +12,17 @@ const output = [
     { code: 3, message: "outside thresholds", type: "measured" },
     { code: 4, message: "There is no enough data", type: "predicted" },
 ]
-var readHTMLfile = function (path, callback) {
-    fs.readFile(path, { encoding: 'utf-8' }, function (err, html) {
-        if (err) {
-            throw err;
-            callback(err);
-        }
-        else {
-            callback(null, html);
-        }
-    });
+
+var arrayAverage = function (array) {
+    let total = 0;
+    for (var i = 0; i < array.length; i++) {
+        total += array[i];
+    }
+    console.log("Average value ", total / array.length);
+    return (total / array.length);
 }
+
+
 var handleNotification = function (input, domain, userid) {
     if (input.result.code != 0 && input.result.code != 4) {
         let transporter = email.createTransport({
@@ -73,10 +69,10 @@ var handleNotification = function (input, domain, userid) {
 
                                     //create notifications
                                     //, slumptestid: slumpresults[slumpresults.length - 1].idslumptests
-                                    dal.notification.create(userinproject[index].idaccounts, input.slumptestid, new Date().toUTCString(), input.result.type, input.prediction, function(errNotification, ResultNofitication){
-                                        if(!errNotification){
-                                            console.log("Notification created for user",  userinproject[index].username);
-                                        }else{
+                                    dal.notification.create(userinproject[index].idaccounts, input.slumptestid, new Date().toUTCString(), input.result.type, input.prediction, function (errNotification, ResultNofitication) {
+                                        if (!errNotification) {
+                                            console.log("Notification created for user", userinproject[index].username);
+                                        } else {
                                             console.log("Notification not created for user", userinproject[index].username);
                                         }
                                     })
@@ -126,12 +122,31 @@ module.exports = {
                             console.log({ result: output[4] })
 
                             //check the latest slump test value if between the threshold to fire notification
-                            if (parseInt(slumpresults[slumpresults.length - 1].value) <= parseInt(slumpresults[0].tholdmin) || parseInt(slumpresults[0].tholdmax) <= parseInt(slumpresults[slumpresults.length - 1].value)) {
-                                // latest slump test outside threshold
-                                console.log("Latest slump test outside threshold");
-                                handleNotification({ result: output[3], prediction: slumpresults[slumpresults.length - 1].value, idcompositions: req.body.composition, idsuppliers: req.body.supplier, idprojects: req.body.project, maxmargin: slumpresults[0].tholdmax, minmargin: slumpresults[0].tholdmin, slumptestid: slumpresults[slumpresults.length - 1].idslumptests }, req.hostname, req.user.id)
-                            }
-                            return
+
+                            //************************************************** */
+                            //COMMENT BECAUSE THIS DOES NOT MAKE SENSE ANYMORE
+                            //************************************************** */
+                            // if (parseInt(slumpresults[slumpresults.length - 1].value) <= parseInt(slumpresults[0].tholdmin) || parseInt(slumpresults[0].tholdmax) <= parseInt(slumpresults[slumpresults.length - 1].value)) {
+                            //     // latest slump test outside threshold
+                            //     console.log("Latest slump test outside threshold");
+                            //     let response = { 
+                            //         result: output[3], 
+                            //         prediction: slumpresults[slumpresults.length - 1].value, 
+                            //         idcompositions: req.body.composition, 
+                            //         idsuppliers: req.body.supplier, 
+                            //         idprojects: req.body.project, 
+                            //         maxmargin: slumpresults[0].tholdmax, 
+                            //         minmargin: slumpresults[0].tholdmin, 
+                            //         slumptestid: slumpresults[slumpresults.length - 1].idslumptests, 
+                            //         hostname: req.hostname, 
+                            //         user: req.user.id,
+                            //         deviation: parseFloat(slumpresults[slumpresults.length - 1].value / arrayAverage(firstinput))
+                            //     };
+                            //     //handleNotification(response)
+                            //     res.status(201).json(response);
+
+                            // }
+                            // return
                         }
                     }
                     //console.log("Continuing....");
@@ -152,35 +167,101 @@ module.exports = {
                     console.log(parseInt(slumpresults[0].tholdmax), "-", parseInt(nextValue), "-", parseInt(slumpresults[0].tholdmin));
 
                     //check the latest slump test value if between the threshold to fire notification
-                    if (parseInt(slumpresults[slumpresults.length - 1].value) <= parseInt(slumpresults[0].tholdmin) || parseInt(slumpresults[0].tholdmax) <= parseInt(slumpresults[slumpresults.length - 1].value)) {
-                        // latest slump test outside threshold
-                        console.log("Latest slump test outside threshold");
-                        handleNotification({ result: output[3], prediction: nextValue, idcompositions: req.body.composition, idsuppliers: req.body.supplier, idprojects: req.body.project, maxmargin: slumpresults[0].tholdmax, minmargin: slumpresults[0].tholdmin, slumptestid: slumpresults[slumpresults.length - 1].idslumptests }, req.hostname, req.user.id)
-                    }
+
+                    //************************************************** */
+                    //COMMENT BECAUSE THIS DOES NOT MAKE SENSE ANYMORE
+                    //************************************************** */
+
+                    // if (parseInt(slumpresults[slumpresults.length - 1].value) <= parseInt(slumpresults[0].tholdmin) || parseInt(slumpresults[0].tholdmax) <= parseInt(slumpresults[slumpresults.length - 1].value)) {
+                    //     // latest slump test outside threshold
+                    //     console.log("Latest slump test outside threshold");
+                    //     let response = {
+                    //         result: output[3], 
+                    //         prediction: nextValue, 
+                    //         idcompositions: req.body.composition, 
+                    //         idsuppliers: req.body.supplier, 
+                    //         idprojects: req.body.project, 
+                    //         maxmargin: slumpresults[0].tholdmax, 
+                    //         minmargin: slumpresults[0].tholdmin, 
+                    //         slumptestid: slumpresults[slumpresults.length - 1].idslumptests,
+                    //         hostname: req.hostname, 
+                    //         user: req.user.id,
+                    //         deviation: parseFloat(nextValue / arrayAverage(firstinput))
+                    //     }
+                    //     //handleNotification(response)
+                    //     res.status(201).json(response)
+                    //     return
+
+                    // }
 
 
 
                     if (parseInt(nextValue) <= parseInt(slumpresults[0].tholdmin) || parseInt(slumpresults[0].tholdmax) <= parseInt(nextValue)) {
                         //prediction outside threshold
-                        console.log({ result: output[2], prediction: nextValue, idcompositions: req.body.composition, idsuppliers: req.body.supplier, idprojects: req.body.project, maxmargin: slumpresults[0].tholdmax, minmargin: slumpresults[0].tholdmin })
-                        handleNotification({ result: output[2], prediction: nextValue, idcompositions: req.body.composition, idsuppliers: req.body.supplier, idprojects: req.body.project, maxmargin: slumpresults[0].tholdmax, minmargin: slumpresults[0].tholdmin, slumptestid: slumpresults[slumpresults.length - 1].idslumptests }, req.hostname, req.user.id)
+                        let response = {
+                            result: output[2],
+                            prediction: nextValue,
+                            idcompositions: req.body.composition,
+                            idsuppliers: req.body.supplier,
+                            idprojects: req.body.project,
+                            maxmargin: slumpresults[0].tholdmax,
+                            minmargin: slumpresults[0].tholdmin,
+                            slumptestid: slumpresults[slumpresults.length - 1].idslumptests,
+                            hostname: req.hostname,
+                            user: req.user.id,
+                            deviation: parseFloat(nextValue / arrayAverage(firstinput))
+                        }
+                        console.log(response)
+                        //handleNotification(response)
+                        res.status(201).json(response);
                     } else {
                         if ((parseInt(nextValue) <= parseInt(minmargin)) || (parseInt(maxmargin) <= parseInt(nextValue))) {
                             //prediction between acceptable margins
-                            console.log({ result: output[1], prediction: nextValue, idcompositions: req.body.composition, idsuppliers: req.body.supplier, idprojects: req.body.project, maxmargin: maxmargin, minmargin: minmargin })
-                            handleNotification({ result: output[1], prediction: nextValue, idcompositions: req.body.composition, idsuppliers: req.body.supplier, idprojects: req.body.project, maxmargin: maxmargin, minmargin: minmargin, slumptestid: slumpresults[slumpresults.length - 1].idslumptests }, req.hostname, req.user.id)
+                            let response = {
+                                result: output[1],
+                                prediction: nextValue,
+                                idcompositions: req.body.composition,
+                                idsuppliers: req.body.supplier,
+                                idprojects: req.body.project,
+                                maxmargin: maxmargin,
+                                minmargin: minmargin,
+                                slumptestid: slumpresults[slumpresults.length - 1].idslumptests,
+                                hostname: req.hostname,
+                                user: req.user.id,
+                                deviation: parseFloat(nextValue / arrayAverage(firstinput))
+                            }
+                            console.log(response)
+                            //handleNotification(response)
+                            res.status(201).json(response);
                         } else {
                             //the prediction next value prediction is inside
-                            console.log({ result: output[0], prediction: nextValue, idcompositions: req.body.composition, idsuppliers: req.body.supplier, idprojects: req.body.project, maxmargin: slumpresults[0].tholdmax, minmargin: slumpresults[0].tholdmin })
-                            handleNotification({ result: output[0], prediction: nextValue, idcompositions: req.body.composition, idsuppliers: req.body.supplier, idprojects: req.body.project, maxmargin: slumpresults[0].tholdmax, minmargin: slumpresults[0].tholdmin, slumptestid: slumpresults[slumpresults.length - 1].idslumptests }, req.hostname, req.user.id)
+
+                            let response = {
+                                result: output[0],
+                                prediction: nextValue,
+                                idcompositions: req.body.composition,
+                                idsuppliers: req.body.supplier,
+                                idprojects: req.body.project,
+                                maxmargin: slumpresults[0].tholdmax,
+                                minmargin: slumpresults[0].tholdmin,
+                                slumptestid: slumpresults[slumpresults.length - 1].idslumptests,
+                                hostname: req.hostname,
+                                user: req.user.id,
+                                deviation: parseFloat(nextValue / arrayAverage(firstinput))
+                            }
+                            console.log(response)
+                            //handleNotification(response)
+                            res.status(201).json(response)
                         }
                     }
                 } else {
                     console.log("prediction error", err);
+                    res.status(500).json({ message: "Prediction error" })
                 }
             })
         } else {
             console.log("missing fields", err);
+            res.status(422).json({ message: "Required fields missing" })
         }
     }
 }

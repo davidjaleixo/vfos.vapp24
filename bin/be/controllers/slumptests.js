@@ -12,10 +12,7 @@ module.exports = {
 
             dal.slumps.create(req.body.value, req.body.supplier, req.body.project, req.user.id, req.body.composition, req.body.loadid, function (err, answer) {
                 if (!err) {
-                    //TODO call next()
                     res.status(201).json(answer);
-                    next();
-                    
                 } else {
                     res.status(500).end();
                 }
@@ -23,7 +20,6 @@ module.exports = {
         } else {
             res.status(422).json({ message: "Missing required fields" })
         }
-
     },
     get: function(req,res){
         if(req.query.project){

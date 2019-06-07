@@ -13,4 +13,7 @@ export class SlumpService {
     getTests(projectId){
         return this.http.get(environment.apiUrl + '/slumptest?project='+projectId);
     }
+    createPrediction(value, compositionId, projectId, supplierId, loadId):Observable<any>{
+        return this.http.post(environment.apiUrl + '/prediction', {value: value, composition: compositionId, project: projectId, supplier: supplierId, loadid: loadId})
+    }
 }

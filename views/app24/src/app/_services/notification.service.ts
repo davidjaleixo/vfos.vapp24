@@ -16,5 +16,8 @@ export class NotificationService {
     markasunread(id) {
         return this.http.patch(environment.apiUrl + '/notifications?id=' + id, { read: false });
     }
+    sendNotification(predictionResult){
+        return this.http.post(environment.apiUrl + '/notifications', predictionResult)
+    }
 
 }
