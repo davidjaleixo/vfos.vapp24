@@ -39,6 +39,7 @@ router.route('/slumptest').get(ctl.slumptests.get);
 router.route('/notifications').get(ctl.notification.get);
 router.route('/notifications').patch(ctl.notification.update);
 router.route('/notifications').post(ctl.notification.harmonizeRequest, ctl.notification.create);
+router.route('/notifications').delete(ctl.notification.delete);
 
 //compositions
 router.route('/compositions').post(ctl.compositions.create);

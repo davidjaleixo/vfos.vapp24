@@ -45,6 +45,15 @@ module.exports = {
                 cb(true, "Relational Storage Component not responding");
             }
         })
+    },
+    delete: function(notificationId, cb){
+        storage('DELETE', "/tables/notifications/rows?filter=idnotification=" + notificationId, {}, function(error, response, body){
+            if(!error){
+                cb(false, {message: "Notification is deleted"})
+            }else{
+                cb(true, "Relational Storage Component not responding");
+            }
+        })
     }
     
 }

@@ -19,5 +19,8 @@ export class NotificationService {
     sendNotification(predictionResult){
         return this.http.post(environment.apiUrl + '/notifications', predictionResult)
     }
+    delete(id){
+        return this.http.delete(environment.apiUrl + '/notifications?id=' + id);
+    }
 
 }

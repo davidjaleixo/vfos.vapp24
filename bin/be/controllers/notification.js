@@ -73,6 +73,19 @@ module.exports = {
             }
         })
     },
+    delete: function(req,res){
+        if(req.query.id){
+            dal.notification.delete(req.body.id, function(err,answer){
+                if(!err){
+                    res.status(201).json({message: "Notification deleted"})
+                }else{
+                    res.status(500).end();
+                }
+            })
+        }else{
+            res.status(422).json({message: "Missing required fields"})
+        }
+    },
     update: function (req, res) {
         console.log(req.body);
         if (req.body.hasOwnProperty('read') && req.query.id) {
