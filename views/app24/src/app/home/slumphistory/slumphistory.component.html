@@ -76,6 +76,7 @@
 
             <label>Select concrete composition to analyse</label>
             <select class="form-control  mb-3" [(ngModel)]="pick_composition">
+              <option disabled selected value> Select the composition </option>
               <option [ngValue]="avcomps" *ngFor="let avcomps of available_compositions">{{avcomps}}</option>
             </select>
 
