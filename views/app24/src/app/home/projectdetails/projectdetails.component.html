@@ -69,6 +69,7 @@
 
             <label for="supplier">Select supplier</label>
             <select class="form-control  mb-3" formControlName="supplierid" id="supplier" required>
+                <option disabled selected value> Select the supplier </option>
               <option [ngValue]="avsuppliers" *ngFor="let avsuppliers of suppList" required>{{avsuppliers.name}}
               </option>
             </select>
@@ -79,6 +80,7 @@
 
             <label for="composition">Select concrete composition</label>
             <select class="form-control mb-3" formControlName="compositionid" id="composition">
+                <option disabled selected value> Select the concrete composition </option>
               <option required [ngValue]="avcompositions" *ngFor="let avcompositions of compositions">
                 {{avcompositions.name}}</option>
             </select>
