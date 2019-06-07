@@ -30,8 +30,8 @@ export class SlumphistoryComponent implements OnInit {
 
   //form
   available_compositions = [];
-  pick_composition : any;
- 
+  pick_composition: any;
+
   constructor(
     private slumpservice: SlumpService,
     private projectservice: ProjectService,
@@ -76,9 +76,9 @@ export class SlumphistoryComponent implements OnInit {
       })
   }
 
-  updatechart(){
+  updatechart() {
     this.composition_values = [];
-    this.x_values =[];
+    this.x_values = [];
     this.tholdmax = [];
     this.tholdmin = [];
 
@@ -128,6 +128,18 @@ export class SlumphistoryComponent implements OnInit {
         });
       }
     });
-  } 
+  }
+
+  deleteSlump(id) {
+    this.slumpservice.delete(id).subscribe(data => {
+      this.slumps.forEach((eachSlump,idx,arr) => {
+        if(eachSlump.idslumptests == id){
+          this.slumps.splice(idx,1)
+        }
+      });
+    }, err => {
+      console.log(err);
+    })
+  }
 
 }

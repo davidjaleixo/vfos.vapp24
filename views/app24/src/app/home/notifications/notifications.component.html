@@ -42,7 +42,7 @@
                 class="btn-sm btn-default">Read</button>
               <button *ngIf="noti.read == 't' " (click)="unread(noti.idnotification)"
                 class="btn-sm btn-default">Unread</button>
-                <button class="btn-sm btn-danger" (click)="deleteNotification(noti.idnotification)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                <button class="btn btn-sm btn-danger" (click)="deleteNotification(noti.idnotification)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
             </td>
 
           </tr>

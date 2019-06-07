@@ -34,6 +34,7 @@ router.route('/accounts').get(ctl.accounts.get);
 //slumps
 router.route('/slumptest').post(ctl.slumptests.create, ctl.prediction.predictNext);
 router.route('/slumptest').get(ctl.slumptests.get);
+router.route('/slumptest').delete(ctl.slumptests.delete);
 
 //notifications
 router.route('/notifications').get(ctl.notification.get);

@@ -16,4 +16,7 @@ export class SlumpService {
     createPrediction(value, compositionId, projectId, supplierId, loadId):Observable<any>{
         return this.http.post(environment.apiUrl + '/prediction', {value: value, composition: compositionId, project: projectId, supplier: supplierId, loadid: loadId})
     }
+    delete(id){
+        return this.http.delete(environment.apiUrl + '/slumptest?id='+id)
+    }
 }

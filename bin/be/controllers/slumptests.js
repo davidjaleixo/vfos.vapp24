@@ -36,7 +36,7 @@ module.exports = {
     },
     delete: function (req, res) {
         if (req.query.id) {
-            dal.projects.delete(req.query.id, function (err, answer) {
+            dal.slumps.delete(req.query.id, function (err, answer) {
                 if (!err) {
                     res.status(200).send(answer);
                 } else {
